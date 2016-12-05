@@ -20,15 +20,17 @@ Aby zainstalować wszystkie wymagane biblioteki:
 ```
 pip install -r requirements.txt
 ```
+Możliwe że będzie też konieczne zainstalowanie `libpq-dev`
+
 
 # Uruchamianie aplikacji
 
 Aby uruchomić serwer aplikacji:
 ```
-python src/manage.py runserver
+./run.sh
 ```
 
 Od tej chwili aplikacja dostępna jest pod adresem:
 ```
-http://localhost:8000
+http://localhost:5000
 ```
