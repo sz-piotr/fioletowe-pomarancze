@@ -2,7 +2,6 @@ from flask import g
 from functools import wraps
 import psycopg2
 from psycopg2.extras import RealDictCursor
-
 _properties = {}
 
 
@@ -31,10 +30,18 @@ def register_teardown(app):
 def transactional(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        conn = get_db()
-        cursor = conn.cursor()
-        ret_value = func(*args, **kwargs, cursor=cursor)
-        conn.commit()
-        cursor.close()
-        return ret_value
+        if not hasattr(g, 'cursor'):
+            try:
+                conn = get_db()
+                g.cursor = conn.cursor()
+                ret_value = func(*args, **kwargs)
+                conn.commit()
+                return ret_value
+            except Exception as e:
+                conn.rollback()
+                raise e
+            finally:
+                del g.cursor
+        else:
+            return func(*args, **kwargs)
     return wrapper
