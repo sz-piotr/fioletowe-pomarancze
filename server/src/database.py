@@ -1,14 +1,18 @@
-from application import app
 from flask import g
 from functools import wraps
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
+_properties = {}
+
+
+def set_properties(**kwargs):
+    global _properties
+    _properties = kwargs
+
 
 def connect_db():
-    conn = psycopg2.connect("host='localhost' dbname='playground' user='user' password='password'",
-                            cursor_factory=RealDictCursor)
-    return conn
+    return psycopg2.connect(cursor_factory=RealDictCursor, **_properties)
 
 
 def get_db():
@@ -17,10 +21,11 @@ def get_db():
     return g.pgsql_db
 
 
-@app.teardown_appcontext
-def close_db(error):
-    if hasattr(g, 'pgsql_db'):
-        g.pgsql_db.close()
+def register_teardown(app):
+    @app.teardown_appcontext
+    def close_db(error):
+        if hasattr(g, 'pgsql_db'):
+            g.pgsql_db.close()
 
 
 def transactional(func):

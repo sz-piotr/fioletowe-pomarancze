@@ -25,9 +25,12 @@ Możliwe że będzie też konieczne zainstalowanie `libpq-dev`
 
 # Uruchamianie aplikacji
 
+Przed uruchomieniem aplikacji należy w katalogu `server` utworzyć plik `application.cfg`. Należy się przy tym kierować zawartością pliku wzorcowego `application.cfg.template`. Plik konfiguracyjny `application.cfg` wykluczony jest z kontroli wersji aby każdy developer mógł korzystać z własnej, niezależnej konfiguracji.
+
 Aby uruchomić serwer aplikacji:
 ```
-./run.sh
+Linux: ./run.sh
+Winows: run.bat
 ```
 
 Od tej chwili aplikacja dostępna jest pod adresem:
