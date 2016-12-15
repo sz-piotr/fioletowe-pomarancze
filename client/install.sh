@@ -96,7 +96,7 @@ case "$NW_OS" in
         chmod +x run.sh
         ;;
     osx )
-        printf "./dist/%s/nwjs ." "$NW_FOLDER" > run.sh
+        printf "./dist/%s/nwjs.app/Contents/MacOS/nwjs ." "$NW_FOLDER" > run.sh
         chmod +x run.sh
         ;;
     win )
