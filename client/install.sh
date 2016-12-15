@@ -1,64 +1,106 @@
-#!/bin/bash
+#! /bin/bash
 
-C_BLACK="\033[0;30m"
-C_DARK_GRAY="\033[1;30m"
-C_RED="\033[0;31m"
-C_LIGHT_RED="\033[1;31m"
-C_GREEN="\033[0;32m"
-C_LIGHT_GREEN="\033[1;32m"
-C_ORANGE="\033[0;33m"
-C_YELLOW="\033[1;33m"
-C_BLUE="\033[0;34m"
-C_LIGHT_BLUE="\033[1;34m"
-C_PURPLE="\033[0;35m"
-C_LIGHT_PURPLE="\033[1;35m"
-C_CYAN="\033[0;36m"
-C_LIGHT_CYAN="\033[1;36m"
-C_LIGHT_GRAY="\033[0;37m"
-C_WHITE="\033[1;37m"
-C_OFF="\033[0m"
-
-NW_VERSION="v0.18.6"
-
-if [ x"$1" = x"-h" -o x"$1" = x"--help" ] ; then
-    echo -e "Script downloads nwjs ${NW_VERSION} runtime."
-    echo "Usage: ./install.sh [OPTION]"
-    echo ""
-    echo "Arguments:"
-    echo "   -h --help    Display help"
-    echo "   -x64         Download x64 version (linux only)"
-    exit
-fi
-
+NW_VERSION="v0.19.2"
 NW_OS="linux"
-NW_ARCH="ia32"
-if [ "$(uname)" == "Darwin" ] ; then
-    NW_OS="osx"
-    NW_ARCH="x64"
-fi
-if [ x"$1" = x"-x64" ] ; then
-    NW_ARCH="x64"
-fi
-NW_URL="https://dl.nwjs.io/$NW_VERSION/nwjs-sdk-$NW_VERSION-$NW_OS-$NW_ARCH.tar.gz"
-NW_SAVE_LOCATION="dist/$NW_OS/nw.zip"
+NW_FILE_FORMAT="tar.gz"
+NW_ARCH="x64"
 
-echo -e "${C_LIGHT_PURPLE}Preparing directories${C_OFF}"
+function show_help {
+    printf "Script downloads NW.js %s and creates an appropiate run script.\n" "$NW_VERSION"
+    printf "Usage: %s [OPTIONS]\n" "$0"
+    printf "\n"
+    printf "Options:\n"
+    printf "    -h --help    Show this screen.\n"
+    printf "    -s OS_NAME   Select target os [linux | win | osx]\n"
+    printf "                 Default: %s.\n" "$NW_OS"
+    printf "    -ia32        Download the 32bit version.\n"
+}
 
-if [ -e "$NW_SAVE_LOCATION" ] ; then
-    echo -en "${C_LIGHT_RED}File exists continue?${C_OFF} [Y/n] "
-    read WE
-    if [ x"$WE" != x"y" -a x"$WE" != x"Y" ] ; then
-        exit
-    fi
-fi
-mkdir -p "dist/linux"
+# read options
 
-echo -e "${C_ORANGE}Downloading...${C_OFF}"
+while :
+do
+	case "$1" in
+        -h | --help )
+            show_help
+            exit 0
+            ;;
+		-s )
+			NW_OS="$2"
+			shift 2
+            case "$NW_OS" in
+                linux )
+                    NW_OS="linux"
+                    NW_FILE_FORMAT="tar.gz"
+                    ;;
+                win )
+                    NW_OS="win"
+                    NW_FILE_FORMAT="zip"
+                    ;;
+                osx )
+                    NW_OS="osx"
+                    NW_FILE_FORMAT="zip"
+                    ;;
+                * )
+                    printf "Error: Unknown os: %s\n" "$2" >&2
+                    exit 1
+                    ;;
+            esac
+			;;
+		-ia32 )
+			NW_ARCH="ia32"
+			shift
+			;;
+		-- ) # End of all options
+			shift
+			break
+            ;;
+		-* )
+		    printf "Error: Unknown option: %s\n" "$1" >&2
+            exit 1
+		    ;;
+		* ) # No more options
+	        break
+	        ;;
+	esac
+done
 
+# setup variables
+NW_URL="https://dl.nwjs.io/$NW_VERSION/nwjs-sdk-$NW_VERSION-$NW_OS-$NW_ARCH.$NW_FILE_FORMAT"
+NW_DOWNLOAD_LOCATION=".temp/nw.$NW_FILE_FORMAT"
+
+# download
+mkdir -p .temp
 if [ x"`which curl`" = x"" ] ; then
-    wget "$NW_URL" -O "$NW_SAVE_LOCATION"
+    wget "$NW_URL" -O "$NW_DOWNLOAD_LOCATION"
 else
-    curl "$NW_URL" > "$NW_SAVE_LOCATION"
+    curl "$NW_URL" > "$NW_DOWNLOAD_LOCATION"
 fi
 
-echo -e "${C_LIGHT_GREEN}Done. Have a nice day${C_OFF}"
+# uncompress
+mkdir -p dist
+if [ "$NW_FILE_FORMAT" = "tar.gz" ] ; then
+    tar zxvf .temp/nw.tar.gz -C dist
+else
+    unzip .temp/nw.zip -d dist
+fi
+
+# clean up
+rm -r .temp
+
+# create run script
+NW_FOLDER="nwjs-sdk-$NW_VERSION-$NW_OS-$NW_ARCH"
+case "$NW_OS" in
+    linux )
+        printf "./dist/%s/nw ." "$NW_FOLDER" > run.sh
+        chmod +x run.sh
+        ;;
+    osx )
+        printf "./dist/%s/nwjs ." "$NW_FOLDER" > run.sh
+        chmod +x run.sh
+        ;;
+    win )
+        printf "dist\\%s\\%s ." "$NW_FOLDER" "nw.exe" > run.bat
+        chmod +x run.bat
+        ;;
+esac
