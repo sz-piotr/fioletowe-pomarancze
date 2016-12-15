@@ -1,4 +1,4 @@
 {
     "name": "helloworld",
-    "main": "index.html"
+    "main": "src/index.html"
 }
