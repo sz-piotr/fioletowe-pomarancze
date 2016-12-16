@@ -3,15 +3,62 @@
 
 <head>
     <meta charset="utf-8">
-    <script src="libs/jquery-3.1.1.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="libs/css/bootstrap-lumen.min.css">
+    <link rel="stylesheet" type="text/css" href="css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script src="libs/js/jquery-3.1.1.min.js"></script>
+    <script src="libs/js/bootstrap-3.3.7.min.js"></script>
     <script src="scripts/main.js"></script>
+
     <title>Fioletowe Pomarańcze</title>
 </head>
 
 <body>
-    <h1>Animals and their sounds</h1>
-    <ul id="animals">
-    </ul>
+    <div id="wrapper" class="">
+
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav noselect">
+                <li class="sidebar-brand">
+                    <a href="#">Fioletowe Pomarańcze</a>
+                </li>
+                <li>
+                    <a href="#">Download</a>
+                </li>
+                <li>
+                    <a href="#">Share</a>
+                </li>
+                <li>
+                    <a href="#">Users</a>
+                </li>
+                <li>
+                    <a href="#">Groups</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="page-content-wrapper">
+            <div id="content" class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>Animals</h1>
+                        <div class="bs-component">
+                            <div id="animals-alert" class="alert alert-danger" style="display: none;">
+                                <strong>Oh snap!</strong> Request failed.
+                            </div>
+                        </div>
+                        <ul id="animals"></ul>
+                        <a class="btn btn-default" onclick="getAnimals()">Refresh</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </body>
 
 </html>
