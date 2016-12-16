@@ -4,13 +4,9 @@
 <head>
     <meta charset="utf-8">
 
-    <link rel="stylesheet" type="text/css" href="libs/css/bootstrap-lumen.min.css">
+    <link rel="stylesheet" type="text/css" href="libs/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/sidebar.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-
-    <script src="libs/js/jquery-3.1.1.min.js"></script>
-    <script src="libs/js/bootstrap-3.3.7.min.js"></script>
-    <script src="scripts/main.js"></script>
 
     <title>Fioletowe Pomarańcze</title>
 </head>
@@ -21,10 +17,13 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav noselect">
                 <li class="sidebar-brand">
-                    <a href="#">Fioletowe Pomarańcze</a>
+                    Fioletowe Pomarańcze
                 </li>
                 <li>
-                    <a href="#">Download</a>
+                    <a href="animals-demo.html" target="content" class="active">Animals Demo</a>
+                </li>
+                <li>
+                    <a href="download.html" target="content">Download</a>
                 </li>
                 <li>
                     <a href="#">Share</a>
@@ -42,23 +41,35 @@
         </div>
 
         <div id="page-content-wrapper">
-            <div id="content" class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1>Animals</h1>
-                        <div class="bs-component">
-                            <div id="animals-alert" class="alert alert-danger" style="display: none;">
-                                <strong>Oh snap!</strong> Request failed.
-                            </div>
-                        </div>
-                        <ul id="animals"></ul>
-                        <a class="btn btn-default" onclick="getAnimals()">Refresh</a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                John Doe <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Sign out</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <iframe name="content" src="animals-demo.html"></iframe>
+
+        </div>
     </div>
+
 </body>
+
+<script src="libs/js/jquery-3.1.1.min.js"></script>
+<script src="libs/js/bootstrap-3.3.7.min.js"></script>
+<script src="scripts/main.js"></script>
 
 </html>
