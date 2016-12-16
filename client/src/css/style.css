@@ -17,3 +17,7 @@ iframe {
     padding: 0;
     border: none;
 }
+
+#content {
+    height: calc(100% - 72px);
+}

@@ -26,6 +26,7 @@ body {
     width: calc(100% - 250px);
     height: 100%;
     position: absolute;
+    overflow: hidden;
 }
 
 .sidebar-nav {
