@@ -1,14 +1,16 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 import database
 import config
 from animals import animals
 from greetings import greetings
 from accounts import accounts
 
-
 app = Flask(__name__)
 app.config.from_object(config.DefaultConfig)
 app.config.from_envvar('PROPERTIES_FILE')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://fioletowe:pomarancze@localhost:5432/appdb'
+db = SQLAlchemy(app)
 
 database.set_properties(
     host = app.config['DB_HOST'],

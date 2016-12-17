@@ -1,3 +1,4 @@
 export FLASK_APP=src/application.py
 export PROPERTIES_FILE=../application.cfg
-flask run
+export FLASK_DEBUG=1
+flask $@
