@@ -2,9 +2,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import database
 import config
-from animals import animals
-from greetings import greetings
-from accounts import accounts
 
 app = Flask(__name__)
 app.config.from_object(config.DefaultConfig)
@@ -20,6 +17,3 @@ database.set_properties(
 )
 database.register_teardown(app)
 
-app.register_blueprint(animals)
-app.register_blueprint(greetings)
-app.register_blueprint(accounts)
