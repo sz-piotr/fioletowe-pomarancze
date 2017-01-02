@@ -1,5 +1,1 @@
-DB_HOST = 'localhost'
-DB_DATABASE = 'appdb'
-DB_USER = 'fioletowe'
-DB_PASSWORD = 'pomarancze'
-DB_PORT = 5432
+SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://fioletowe:pomarancze@localhost:5432/appdb'
