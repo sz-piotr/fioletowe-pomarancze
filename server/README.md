@@ -22,6 +22,17 @@ pip install -r requirements.txt
 ```
 Możliwe że będzie też konieczne zainstalowanie `libpq-dev`
 
+# Zarządzanie bazą danych
+
+Aby przenieść zmiany modelu do kontroli wersji bazy danych
+```
+./run.sh db migrate
+```
+
+Aby dokonać synchronizacji bazy z kodem
+```
+./run.sh db upgrade
+```
 
 # Uruchamianie aplikacji
 
