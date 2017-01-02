@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import exceptions
 
 import database
 import config
@@ -12,13 +13,15 @@ app.config.from_envvar('PROPERTIES_FILE')
 db = SQLAlchemy(app)
 
 database.set_properties(
-    host = app.config['DB_HOST'],
-    database = app.config['DB_DATABASE'],
-    user = app.config['DB_USER'],
-    password = app.config['DB_PASSWORD']
+    host=app.config['DB_HOST'],
+    database=app.config['DB_DATABASE'],
+    user=app.config['DB_USER'],
+    password=app.config['DB_PASSWORD']
 )
 database.register_teardown(app)
 migrate = Migrate(app, db)
+
+exceptions.register(app)
 
 from animals import animals
 from greetings import greetings
