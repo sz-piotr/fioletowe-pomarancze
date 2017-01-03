@@ -1,6 +1,6 @@
 {
     "name": "helloworld",
-    "main": "src/index.html",
+    "main": "index.html",
     "window": {
         "toolbar": true,
         "frame": true,
