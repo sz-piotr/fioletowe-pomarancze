@@ -35,8 +35,15 @@ class AlreadyExistsError(ApiException):
 
 class LoginError(ApiException):
 
+    def __init__(self, message='Invalid username or password'):
+        ApiException.__init__(self, message, code='LOGIN_ERROR')
+
+
+class LoginRequredError(ApiException):
+
     def __init__(self):
-        ApiException.__init__(self, message='Invalid username or password', code='LOGIN_ERROR')
+        ApiException.__init__(self, message='Login required', code='LOGIN_REQUIRED',
+                              status_code=HTTPStatus.UNAUTHORIZED)
 
 
 def register(app):

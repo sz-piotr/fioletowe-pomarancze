@@ -2,6 +2,12 @@ from auth import auth, secret, tokens
 from users.models import User
 from flask import jsonify, request
 from exceptions import LoginError, MalformedJsonError
+from auth.decorators import login_required
+
+@auth.route('/test', methods=['POST'])
+@login_required
+def test():
+    return 'IT WORKS'
 
 
 @auth.route('/login', methods=['POST'])
