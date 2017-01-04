@@ -15,12 +15,12 @@ def list():
 
 @users.route('', methods=['POST'])
 def add():
-    user_dict = request.get_json()
+    data = request.get_json()
     try:
         user = User(
-            username=user_dict['username'],
-            email=user_dict['email'],
-            password=user_dict['password']
+            username=data['username'],
+            email=data['email'],
+            password=data['password']
         )
         db.session.add(user)
         db.session.commit()

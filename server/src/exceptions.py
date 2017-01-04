@@ -30,7 +30,13 @@ class MalformedJsonError(ApiException):
 class AlreadyExistsError(ApiException):
 
     def __init__(self, item):
-        ApiException.__init__(self, message=item + ' already exists.', code='ALREADY_EXISTS')
+        ApiException.__init__(self, message=item + ' already exists', code='ALREADY_EXISTS')
+
+
+class LoginError(ApiException):
+
+    def __init__(self):
+        ApiException.__init__(self, message='Invalid username or password', code='LOGIN_ERROR')
 
 
 def register(app):

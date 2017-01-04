@@ -1,1 +1,3 @@
 SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://fioletowe:pomarancze@localhost:5432/appdb'
+SECRET='supersecuresecret111!!!oneoneone'
+TOKEN_DURATION=120

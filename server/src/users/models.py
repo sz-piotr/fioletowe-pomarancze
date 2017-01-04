@@ -16,5 +16,8 @@ class User(db.Model, Serializer):
         self.email = email
         self.password = passwords.hash(password)
 
+    def check(self, password):
+        return passwords.check(password, self.password)
+
     def __repr__(self):
         return '<User %r>' % self.username

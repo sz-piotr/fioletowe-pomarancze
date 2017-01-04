@@ -15,5 +15,7 @@ migrate = Migrate(app, db)
 exceptions.register(app)
 
 from users import users
+from auth import auth
 
 app.register_blueprint(users)
+app.register_blueprint(auth)
