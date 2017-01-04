@@ -3,17 +3,17 @@ from users.models import User
 from flask import jsonify, request
 from sqlalchemy.exc import IntegrityError
 from http import HTTPStatus
-from exceptions import ApiException, MalformedJsonException
+from exceptions import AlreadyExistsError, MalformedJsonError
 from application import db
 
 
-@users.route('/list', methods=['GET'])
+@users.route('', methods=['GET'])
 def list():
     users = User.query.all()
     return jsonify(User.serialize_list(users, exclude='id'))
 
 
-@users.route('/add', methods=['POST'])
+@users.route('', methods=['POST'])
 def add():
     user_dict = request.get_json()
     try:
@@ -25,11 +25,11 @@ def add():
         db.session.add(user)
         db.session.commit()
     except KeyError:
-        raise MalformedJsonException()
+        raise MalformedJsonError()
     except IntegrityError as e:
         e = str(e)
         if 'Key (username)' in e:
-            raise ApiException('Username already in use')
+            raise AlreadyExistsError('Username')
         elif 'Key (email)' in e:
-            raise ApiException('Email already in use')
+            raise AlreadyExistsError('Email')
     return ('', HTTPStatus.NO_CONTENT)
