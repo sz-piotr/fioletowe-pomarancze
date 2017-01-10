@@ -2,3 +2,7 @@
     color: #4f9fcf;
     font-weight: bold;
 }
+
+.breadcrumb-fix > li + li:before {
+    padding: 0 0px 0 9px;
+}

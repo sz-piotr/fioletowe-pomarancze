@@ -1,17 +1,23 @@
-<div class="container-fluid">
+<div class="container-fluid noselect">
+    <ol class="breadcrumb breadcrumb-fix">
+        <li ng-repeat="file in $ctrl.breadcrumbs">
+            <a ng-click="$ctrl.setDir(file);" class="click">
+                {{file.name}}
+                <span ng-if="!file.name" class="glyphicon glyphicon-hdd" aria-hidden="true"></span>
+            </a>
+        </li>
+    </ol>
+    <div class="alert alert-danger" role="alert" ng-if="$ctrl.error">
+        {{$ctrl.error}}
+    </div>
     <table class="table table-condensed table-hover">
-        <thead>
-            <tr>
-                <th>Filename</th>
-            </tr>
-        </thead>
-        <tbody ng-repeat="file in $ctrl.files">
-            <tr ng-click="$ctrl.setDir(file);">
-                <td ng-if="file.stats.isDirectory()" class="folder">
+        <tbody>
+            <tr ng-click="$ctrl.setDir(file);" ng-repeat="file in $ctrl.files">
+                <td ng-if="file.directory" class="folder click">
                     <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
                     {{file.name}}
                 </td>
-                <td ng-if="!file.stats.isDirectory()">
+                <td ng-if="!file.directory" class="noclick">
                     <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
                     {{file.name}}
                 </td>
