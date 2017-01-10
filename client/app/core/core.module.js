@@ -1,5 +1,6 @@
 'use strict';
 
 angular.module('core', [
-    'core.phone'
+    'core.phone',
+    'core.fileSystem'
 ]);

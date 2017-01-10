@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('phonecatApp', [
+angular.module('fioletoweApp', [
     'ngRoute',
     'angularCSS',
     'core',
+    'fsBrowser',
     'phoneList',
     'phoneDetail'
 ]);

@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <table class="table table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>Filename</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="file in $ctrl.files">
+            <tr ng-click="$ctrl.setDir(file);">
+                <td ng-if="file.stats.isDirectory()" class="folder">
+                    <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
+                    {{file.name}}
+                </td>
+                <td ng-if="!file.stats.isDirectory()">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                    {{file.name}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
