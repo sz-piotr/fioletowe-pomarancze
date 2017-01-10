@@ -1,17 +1,18 @@
 {
-  "name": "helloworld",
-  "main": "index.html",
-  "window": {
-    "toolbar": true,
-    "frame": true,
-    "position": "center",
-    "width": 900,
-    "height": 600,
-    "min_width": 800,
-    "min_height": 600
-  },
-  "dependencies": {
-    "bootstrap": "^3.3.7",
-    "jquery": "^3.1.1"
-  }
+    "name": "fioletowe-pomarancze",
+    "main": "app/index.html",
+    "window": {
+        "frame": true,
+        "position": "center",
+        "width": 900,
+        "height": 600,
+        "min_width": 800,
+        "min_height": 600
+    },
+    "dependencies": {
+        "bower": "^1.8.0"
+    },
+    "scripts": {
+        "postinstall": "bower install"
+    }
 }
