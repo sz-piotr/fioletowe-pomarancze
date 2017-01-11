@@ -1,5 +1,5 @@
-body {
-    padding: 20px;
+html, body {
+    height: 100%;
 }
 
 .click {
@@ -13,4 +13,23 @@ body {
 
 .noselect {
     user-select: none;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #8d29a6;
+    border-color: #5b31b4;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #74188b;
+    border-color: #481f9e;
+}
+
+.centered {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }

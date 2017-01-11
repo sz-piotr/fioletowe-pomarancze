@@ -6,8 +6,8 @@ angular.module('fioletoweApp')
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|chrome-extension):/);
 
         $routeProvider
-            .when('/', {
-                template: '<fs-browser></fs-browser>'
+            .when('/login', {
+                template: '<login></login>'
             })
-            .otherwise('/');
+            .otherwise('/login');
     });
