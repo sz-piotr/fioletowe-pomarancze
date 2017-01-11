@@ -5,6 +5,4 @@ angular.module('fioletoweApp', [
     'angularCSS',
     'core',
     'fsBrowser',
-    'phoneList',
-    'phoneDetail'
 ]);
