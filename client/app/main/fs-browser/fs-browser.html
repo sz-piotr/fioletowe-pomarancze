@@ -13,12 +13,16 @@
     <table class="table table-condensed table-hover">
         <tbody>
             <tr ng-click="$ctrl.setDir(file);" ng-repeat="file in $ctrl.files">
-                <td ng-if="file.directory" class="folder click">
+                <td ng-if="file.directory && !file.error" class="folder click">
                     <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
                     {{file.name}}
                 </td>
-                <td ng-if="!file.directory" class="noclick">
+                <td ng-if="!file.directory && !file.error" class="noclick">
                     <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                    {{file.name}}
+                </td>
+                <td ng-if="file.error" class="noclick fs-error">
+                    <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                     {{file.name}}
                 </td>
             </tr>

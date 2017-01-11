@@ -6,3 +6,8 @@
 .breadcrumb-fix > li + li:before {
     padding: 0 0px 0 9px;
 }
+
+.fs-error {
+    color: red;
+    font-weight: bold;
+}

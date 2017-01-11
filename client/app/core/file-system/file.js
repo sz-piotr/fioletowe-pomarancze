@@ -8,7 +8,12 @@ var File = (function() {
         constructor(filepath) {
             this.path = filepath;
             this.name = path.basename(filepath);
-            this.directory = fs.statSync(filepath).isDirectory();
+            try {
+                this.directory = fs.statSync(filepath).isDirectory();
+            } catch(e) {
+                this.directory = false;
+                this.error = true;
+            }
         }
 
         children() {
