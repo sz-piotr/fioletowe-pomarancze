@@ -10,6 +10,8 @@ angular.module('fioletoweApp')
                 template: '<login></login>'
             }).when('/signup', {
                 template: '<signup></signup>'
+            }).when('/main', {
+                template: '<fs-browser></fs-browser>'
             })
             .otherwise('/login');
     });

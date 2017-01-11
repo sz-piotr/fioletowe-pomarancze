@@ -3,8 +3,8 @@
 angular
     .module('fsBrowser')
     .component('fsBrowser', {
-        templateUrl: 'fs-browser/fs-browser.html',
-        css: 'fs-browser/fs-browser.css',
+        templateUrl: 'main/fs-browser/fs-browser.html',
+        css: 'main/fs-browser/fs-browser.css',
         controller: function FsBrowserController(FileSystem) {
             this.setDir = file => {
                 if (file.directory) {
