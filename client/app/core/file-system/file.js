@@ -12,7 +12,6 @@ var File = (function() {
         }
 
         children() {
-            console.log('children', this);
             return fs.readdirSync(this.path).map(
                 filename => new File(path.join(this.path, filename))
             );

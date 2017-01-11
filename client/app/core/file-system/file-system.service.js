@@ -4,8 +4,6 @@ angular.module('core.fileSystem')
     .factory('FileSystem', function() {
         var homeFolder = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
 
-        console.log(homeFolder);
-
         function compareFiles(a, b) {
             if(a.directory !== b.directory) {
                 return a.directory ? -1 : 1;
