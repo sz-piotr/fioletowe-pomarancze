@@ -8,6 +8,8 @@ angular.module('fioletoweApp')
         $routeProvider
             .when('/login', {
                 template: '<login></login>'
+            }).when('/signup', {
+                template: '<signup></signup>'
             })
             .otherwise('/login');
     });

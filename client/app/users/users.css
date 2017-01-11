@@ -1,14 +1,14 @@
-.login-page {
+.user-page {
     background-color: #f4f4f4;
     height: 100vh;
     padding: 20px;
 }
 
-.login-form {
+.user-form {
     width: 400px;
 }
 
-.login-form-container {
+.user-form-container {
     width: 420px;
     padding: 10px;
     background-color: #fff;
@@ -18,33 +18,24 @@
     margin-bottom: 20px;
 }
 
-.login-button {
+.user-button {
     margin-top: 10px;
     width: 400px;
 }
 
 .app-logo {
-    width: 150px;
-    height: 150px;
     margin-bottom: 5px;
 }
 
-.login-header {
+.user-header {
     margin-bottom: 20px;
 }
 
-.signup-container {
+.user-other-container {
     width: 420px;
     padding: 10px;
     background-color: #f4f4f4;
     border: 1px solid #ddd;
     border-radius: 3px;
     margin: 0 auto;
-}
-
-.centered {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
 }

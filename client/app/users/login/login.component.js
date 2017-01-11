@@ -3,8 +3,8 @@
 angular
     .module('login')
     .component('login', {
-        templateUrl: 'login/login.html',
-        css: 'login/login.css',
+        templateUrl: 'users/login/login.html',
+        css: 'users/users.css',
         controller: function LoginController() {
             this.login = (user, password) => {
                 console.log(user, password);

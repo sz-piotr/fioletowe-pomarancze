@@ -5,5 +5,6 @@ angular.module('fioletoweApp', [
     'angularCSS',
     'core',
     'login',
+    'signup',
     'fsBrowser',
 ]);
