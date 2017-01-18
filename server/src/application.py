@@ -19,3 +19,6 @@ from auth import auth
 
 app.register_blueprint(users)
 app.register_blueprint(auth)
+
+from application import db
+db.create_all()

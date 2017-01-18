@@ -5,9 +5,11 @@ from sqlalchemy.exc import IntegrityError
 from http import HTTPStatus
 from exceptions import AlreadyExistsError, MalformedJsonError
 from application import db
+from auth.decorators import login_required
 
 
 @users.route('', methods=['GET'])
+@login_required
 def list():
     users = User.query.all()
     return jsonify(User.serialize_list(users, exclude='id'))
@@ -15,7 +17,7 @@ def list():
 
 @users.route('', methods=['POST'])
 def add():
-    data = request.get_json()
+    data = request.get_json(force=True)
     try:
         user = User(
             username=data['username'],
