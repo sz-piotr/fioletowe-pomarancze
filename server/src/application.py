@@ -16,10 +16,14 @@ exceptions.register(app)
 
 from users import users
 from auth import auth
+from devices import devices
 from debug import debug
 
-app.register_blueprint(users, url_prefix='/api')
-app.register_blueprint(auth, url_prefix='/api')
+api_prefix = app.config['API_PREFIX']
+
+app.register_blueprint(users, url_prefix=api_prefix)
+app.register_blueprint(auth, url_prefix=api_prefix)
+app.register_blueprint(devices, url_prefix=api_prefix)
 app.register_blueprint(debug)
 
 from application import db
