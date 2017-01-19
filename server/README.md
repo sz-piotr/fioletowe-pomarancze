@@ -53,3 +53,7 @@ Jeśli aplikacja ma nasłuchiwać na połączenia z zewnątrz:
 ```
 ./run.sh --host=0.0.0.0
 ```
+
+# Pozostałe informacje
+
+[JSON Schema](http://json-schema.org/example1.html)
