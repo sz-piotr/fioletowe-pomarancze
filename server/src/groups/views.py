@@ -10,7 +10,15 @@ from util.decorators import request_schema
 @login_required
 def list():
     # TODO implement
-    return jsonify([])
+    return jsonify({
+        'groups': [{
+            'name': 'name',
+            'members': [{
+                'email': 'email',
+                'name': 'name'
+            }]
+        }]
+    })
 
 
 @groups.route('/groups', methods=['POST'])
