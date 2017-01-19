@@ -8,15 +8,16 @@ from application import db
 from auth.decorators import login_required
 
 
-@users.route('', methods=['GET'])
+@users.route('/users', methods=['GET'])
 @login_required
 def list():
     users = User.query.all()
     return jsonify(User.serialize_list(users, exclude='id'))
 
 
-@users.route('', methods=['POST'])
+@users.route('/users', methods=['POST'])
 def add():
+    # TODO add email confirmation
     data = request.get_json(force=True)
     try:
         user = User(

@@ -16,9 +16,11 @@ exceptions.register(app)
 
 from users import users
 from auth import auth
+from debug import debug
 
-app.register_blueprint(users)
-app.register_blueprint(auth)
+app.register_blueprint(users, url_prefix='/api')
+app.register_blueprint(auth, url_prefix='/api')
+app.register_blueprint(debug)
 
 from application import db
 db.create_all()
