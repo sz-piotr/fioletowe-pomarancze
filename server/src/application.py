@@ -17,6 +17,7 @@ exceptions.register(app)
 from users import users
 from auth import auth
 from devices import devices
+from groups import groups
 from debug import debug
 
 api_prefix = app.config['API_PREFIX']
@@ -24,6 +25,7 @@ api_prefix = app.config['API_PREFIX']
 app.register_blueprint(users, url_prefix=api_prefix)
 app.register_blueprint(auth, url_prefix=api_prefix)
 app.register_blueprint(devices, url_prefix=api_prefix)
+app.register_blueprint(groups, url_prefix=api_prefix)
 app.register_blueprint(debug)
 
 from application import db
