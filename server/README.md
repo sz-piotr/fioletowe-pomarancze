@@ -48,3 +48,12 @@ Od tej chwili aplikacja dostępna jest pod adresem:
 ```
 http://localhost:5000
 ```
+
+Jeśli aplikacja ma nasłuchiwać na połączenia z zewnątrz:
+```
+./run.sh --host=0.0.0.0
+```
+
+# Pozostałe informacje
+
+[JSON Schema](http://json-schema.org/example1.html)

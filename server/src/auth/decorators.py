@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import request
+from flask import request, g
 from exceptions import LoginRequredError, LoginError
 from auth import tokens
 from jwt.exceptions import InvalidTokenError
@@ -15,7 +15,7 @@ def login_required(f):
         if auth == None or header_format.fullmatch(auth) == None:
             raise LoginRequredError()
         try:
-            payload = tokens.decode(auth[7:])
+            g.auth = tokens.decode(auth[7:])
         except InvalidTokenError:
             raise LoginError('Invalid token')
         return f(*args, **kwargs)

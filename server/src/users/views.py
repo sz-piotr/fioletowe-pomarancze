@@ -1,31 +1,33 @@
-from users import users
+from users import users, schemas
 from users.models import User
-from flask import jsonify, request
+from flask import jsonify, request, g
 from sqlalchemy.exc import IntegrityError
 from http import HTTPStatus
 from exceptions import AlreadyExistsError, MalformedJsonError
 from application import db
+from auth.decorators import login_required
+from util.decorators import request_schema
 
 
-@users.route('', methods=['GET'])
+@users.route('/users', methods=['GET'])
+@login_required
 def list():
     users = User.query.all()
     return jsonify(User.serialize_list(users, exclude='id'))
 
 
-@users.route('', methods=['POST'])
+@users.route('/users', methods=['POST'])
+@request_schema(schemas.add_user)
 def add():
-    data = request.get_json()
+    # TODO add email confirmation
     try:
         user = User(
-            username=data['username'],
-            email=data['email'],
-            password=data['password']
+            username=g.data['username'],
+            email=g.data['email'],
+            password=g.data['password']
         )
         db.session.add(user)
         db.session.commit()
-    except KeyError:
-        raise MalformedJsonError()
     except IntegrityError as e:
         e = str(e)
         if 'Key (username)' in e:

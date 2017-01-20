@@ -12,7 +12,7 @@ def test():
 
 @auth.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
+    data = request.get_json(force=True)
     try:
         user = User.query.filter_by(username=data['username']).first()
         if user != None and user.check(data['password']):
