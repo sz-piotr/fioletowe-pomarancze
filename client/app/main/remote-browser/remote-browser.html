@@ -15,7 +15,7 @@
     </div>
     <table class="table table-condensed table-hover">
         <tbody>
-            <tr ng-click="$ctrl.goto(node);" ng-repeat="node in $ctrl.nodes">
+            <tr ng-click="$ctrl.goto(node);" ng-repeat="node in $ctrl.nodes | filter:$ctrl.filter">
                 <td ng-if="node.isDirectory()" class="folder click">
                     <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
                     {{node.name}}
