@@ -18,7 +18,7 @@ def list_shares():
     })
 
 
-@shares.route('/shares/public/<string:user_name>/at', methods=['GET'])
+@shares.route('/shares/public/<user_name>/at', methods=['GET'])
 @login_required
 def get_access_token(user_name):
     # TODO implement

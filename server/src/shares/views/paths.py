@@ -5,19 +5,18 @@ from auth.decorators import login_required
 from util.decorators import request_schema
 
 
-@shares.route('/shares/<string:share_name>', methods=['POST'])
+@shares.route('/shares/<share_name>/paths/<path_name>', methods=['POST'])
 @login_required
-@request_schema(schemas.add_paths)
-def add_paths(share_name):
+@request_schema(schemas.add_path)
+def add_path(share_name, path_name):
     # TODO implement
-    print('Received', g.data)
-    return ('', HTTPStatus.NO_CONTENT)
+    print('Adding %s to %s' % (path_name, share_name))
+    return ('', HTTPStatus.OK)
 
 
-@shares.route('/shares/<string:share_name>', methods=['DELETE'])
+@shares.route('/shares/<share_name>/paths/<path_name>', methods=['DELETE'])
 @login_required
-@request_schema(schemas.remove_paths)
-def remove_paths(share_name):
+def remove_path(share_name, path_name):
     # TODO implement
-    print('Received', g.data)
-    return ('', HTTPStatus.NO_CONTENT)
+    print('Removing %s from %s' % (path_name, share_name))
+    return ('', HTTPStatus.OK)

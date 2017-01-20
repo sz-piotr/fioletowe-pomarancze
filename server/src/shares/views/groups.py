@@ -5,19 +5,17 @@ from auth.decorators import login_required
 from util.decorators import request_schema
 
 
-@shares.route('/shares/<string:share_name>/groups', methods=['POST'])
+@shares.route('/groups<group_name>/shares/<share_name>', methods=['POST'])
 @login_required
-@request_schema(schemas.add_to_groups)
-def add_to_groups(share_name):
+def add_to_group(group_name, share_name):
     # TODO implement
-    print('Received', g.data)
-    return ('', HTTPStatus.NO_CONTENT)
+    print('Adding %s to %s' % (group_name, share_name))
+    return ('', HTTPStatus.OK)
 
 
-@shares.route('/shares/<string:share_name>/groups', methods=['DELETE'])
+@shares.route('/groups<group_name>/shares/<share_name>', methods=['DELETE'])
 @login_required
-@request_schema(schemas.remove_from_groups)
-def remove_from_groups(share_name):
+def remove_from_group(group_name, share_name):
     # TODO implement
-    print('Received', g.data)
-    return ('', HTTPStatus.NO_CONTENT)
+    print('Removing %s from %s' % (group_name, share_name))
+    return ('', HTTPStatus.OK)

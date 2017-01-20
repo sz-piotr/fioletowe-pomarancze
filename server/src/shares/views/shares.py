@@ -21,19 +21,18 @@ def list():
     })
 
 
-@shares.route('/shares', methods=['POST'])
+@shares.route('/shares/<share_name>', methods=['POST'])
 @login_required
-@request_schema(schemas.add_shares)
-def add():
+@request_schema(schemas.add_share)
+def add(share_name):
     # TODO implement
-    print('Received', g.data)
-    return ('', HTTPStatus.NO_CONTENT)
+    print('Adding:', share_name)
+    return ('', HTTPStatus.OK)
 
 
-@shares.route('/shares', methods=['DELETE'])
+@shares.route('/shares/<share_name>', methods=['DELETE'])
 @login_required
-@request_schema(schemas.remove_shares)
-def remove():
+def remove(share_name):
     # TODO implement
-    print('Received', g.data)
-    return ('', HTTPStatus.NO_CONTENT)
+    print('Removing:', share_name)
+    return ('', HTTPStatus.OK)
