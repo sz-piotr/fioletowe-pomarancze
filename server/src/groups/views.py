@@ -21,37 +21,33 @@ def list():
     })
 
 
-@groups.route('/groups', methods=['POST'])
+@groups.route('/groups/<group_name>', methods=['POST'])
 @login_required
-@request_schema(schemas.add_groups)
-def add():
+def add(group_name):
     # TODO implement
-    print('Received', g.data)
-    return ('', HTTPStatus.NO_CONTENT)
+    print('Adding:', group_name)
+    return ('', HTTPStatus.OK)
 
 
-@groups.route('/groups', methods=['DELETE'])
+@groups.route('/groups/<group_name>', methods=['DELETE'])
 @login_required
-@request_schema(schemas.remove_groups)
-def remove():
+def remove(group_name):
     # TODO implement
-    print('Received', g.data)
-    return ('', HTTPStatus.NO_CONTENT)
+    print('Removing:', group_name)
+    return ('', HTTPStatus.OK)
 
 
-@groups.route('/groups/<string:group_name>', methods=['POST'])
+@groups.route('/groups/<group_name>/members/<member_email>', methods=['POST'])
 @login_required
-@request_schema(schemas.add_members)
-def add_members(group_name):
+def add_members(group_name, member_email):
     # TODO implement
-    print('Received', g.data)
-    return ('', HTTPStatus.NO_CONTENT)
+    print('Adding %s to %s' % (member_email, group_name))
+    return ('', HTTPStatus.OK)
 
 
-@groups.route('/groups/<string:group_name>', methods=['DELETE'])
+@groups.route('/groups/<group_name>/members/<member_email>', methods=['DELETE'])
 @login_required
-@request_schema(schemas.remove_members)
-def remove_members(group_name):
+def remove_members(group_name, member_email):
     # TODO implement
-    print('Received', g.data)
-    return ('', HTTPStatus.NO_CONTENT)
+    print('Removing %s from %s' % (member_email, group_name))
+    return ('', HTTPStatus.OK)
