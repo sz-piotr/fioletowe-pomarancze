@@ -2,12 +2,12 @@
     <div class="centered">
         <div class="user-form-container">
             <div class="text-center">
-                <img src="images/logo.svg" class="app-logo" width="150" height="150"></img>
+                <img src="images/logo.svg" class="app-logo" width="150" height="150" />
                 <h4 class="user-header">Log in to <strong>Fioletowe Pomarańcze</strong></h4>
             </div>
             <form class="user-form" name="loginform" novalidate>
                 <div class="alert alert-danger" role="alert" ng-if="$ctrl.error">Invalid <strong>username</strong> or <strong>password</strong>.</div>
-                
+
                 <div class="form-group" ng-class="{true: 'has-error'}[loginform.$submitted && loginform.username.$invalid]">
                     <label class="control-label" for="username">Username or email</label>
                     <input ng-model="$ctrl.user" type="text" class="form-control"
@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="text-center">
-                    <input type="submit" ng-click="$ctrl.login()" class="btn btn-primary user-button" value="Log in"></button>
+                    <input type="submit" ng-click="$ctrl.login()" class="btn btn-primary user-button" value="Log in"></input>
                 </div>
             </form>
 

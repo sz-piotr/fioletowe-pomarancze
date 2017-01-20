@@ -4,21 +4,29 @@
             <div class="text-center">
                 <h4 class="user-header">Sign Up to <strong>Fioletowe Pomarańcze</strong></h4>
             </div>
-            <form class="user-form">
-                <div class="form-group">
-                    <label for="loginInputUsername">Username</label>
-                    <input ng-model="$ctrl.user" type="text" class="form-control" id="loginInputUsername">
+            <form class="user-form" name="signupform" novalidate>
+                <div class="alert alert-danger" role="alert" ng-if="$ctrl.error">{{ $ctrl.error }}</strong>.</div>
+
+                <div class="form-group" ng-class="{true: 'has-error'}[signupform.$submitted && signupform.username.$invalid]">
+                    <label class="control-label" for="username">Username</label>
+                    <input ng-model="$ctrl.user" type="text" class="form-control"
+                            name="username" required />
                 </div>
-                <div class="form-group">
-                    <label for="loginInputEmail">Email</label>
-                    <input ng-model="$ctrl.mail" type="email" class="form-control" id="loginInputUsername" placeholder="your.mail@example.com">
+
+                <div class="form-group" ng-class="{true: 'has-error'}[signupform.$submitted && signupform.email.$invalid]">
+                    <label class="control-label" for="email">E-mail</label>
+                    <input ng-model="$ctrl.mail" type="text" class="form-control"
+                            name="email" placeholder="your.mail@example.com" required />
                 </div>
-                <div class="form-group">
-                    <label for="loginInputPassword">Password</label>
-                    <input ng-model="$ctrl.pass" type="password" class="form-control" id="loginInputPassword" placeholder="password">
+
+                <div class="form-group" ng-class="{true: 'has-error'}[signupform.$submitted && signupform.password.$invalid]">
+                    <label class="control-label" for="password">Password</label>
+                    <input ng-model="$ctrl.pass" type="password" class="form-control"
+                            name="password" placeholder="Password" required autocomplete="new-password" />
                 </div>
+
                 <div class="text-center">
-                    <button ng-click="$ctrl.reg()" class="btn btn-primary user-button">Create an account</button>
+                    <input type="submit" ng-click="$ctrl.reg()" class="btn btn-primary user-button" value="Log in"></input>
                 </div>
             </form>
         </div>

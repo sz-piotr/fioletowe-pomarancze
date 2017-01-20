@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('signup', []);
+angular.module('users.signup', []);

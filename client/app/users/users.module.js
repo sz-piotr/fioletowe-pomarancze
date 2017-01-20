@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('users', [
-    'login',
-    'signup'
+    'users.login',
+    'users.signup'
 ]);

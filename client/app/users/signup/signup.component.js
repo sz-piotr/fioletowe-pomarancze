@@ -1,26 +1,29 @@
 'use strict';
 
 angular
-    .module('signup')
+    .module('users.signup')
     .component('signup', {
         templateUrl: 'users/signup/signup.html',
         css: 'users/users.css',
-        controller: function SignupController($http, $location) {
+        controller: function SignupController(AuthService, $timeout, $scope, $location) {
             this.reg = () => {
-                var dat = {
-                    username:this.user,
-                    email:this.mail,
-                    password:this.pass
-                };
-                console.log(dat);
+                if (!$scope.signupform.$invalid) {
+                    AuthService.signup(this.user, this.mail, this.pass)
+                        .then(response => {
+                            console.log(response);
+                            $location.path('/login');
+                        }, error => {
+                            this.error = error.data.msg;
+                            $timeout(this.reset);
+                        });
+                }
+            }
 
-                $http.post(`${global.cfg.server}/api/users`, dat
-                ).then(function(response){
-                    $location.path('/login');
-                }, function(response){
-                    alert('error');
-                    console.error(response);
-                });
+            this.reset = () => {
+                delete this.email;
+                delete this.pass;
+                $scope.loginform.$setPristine();
+                $scope.loginform.$setUntouched();
             }
         }
     });
