@@ -39,7 +39,7 @@ def remove(group_name):
 
 @groups.route('/groups/<group_name>/members/<member_email>', methods=['POST'])
 @login_required
-def add_members(group_name, member_email):
+def add_member(group_name, member_email):
     # TODO implement
     print('Adding %s to %s' % (member_email, group_name))
     return ('', HTTPStatus.OK)
@@ -47,7 +47,7 @@ def add_members(group_name, member_email):
 
 @groups.route('/groups/<group_name>/members/<member_email>', methods=['DELETE'])
 @login_required
-def remove_members(group_name, member_email):
+def remove_member(group_name, member_email):
     # TODO implement
     print('Removing %s from %s' % (member_email, group_name))
     return ('', HTTPStatus.OK)

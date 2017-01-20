@@ -23,7 +23,7 @@ def list():
 
 @devices.route('/devices/<device_name>', methods=['POST'])
 @login_required
-@request_schema(schemas.add_devices)
+@request_schema(schemas.add_device)
 def add(device_name):
     # TODO implement
     print('Adding: ', device_name)
