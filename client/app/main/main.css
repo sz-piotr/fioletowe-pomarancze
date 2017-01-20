@@ -1,0 +1,11 @@
+#left-wrapper {
+    width: 200px;
+    height: 100vh;
+    float: left;
+}
+
+#right-wrapper {
+    width: calc(100% - 200px);
+    height: 100vh;
+    float: right;
+}

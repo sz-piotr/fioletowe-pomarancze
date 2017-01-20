@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('fioletoweApp', [
-    'ngRoute',
     'ui.router',
     'angularCSS',
     'core',
