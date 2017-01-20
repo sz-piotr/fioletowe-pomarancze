@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('main', [
-    'fsBrowser',
+    'main.remoteBrowser',
     'shareBrowser',
     'userBrowser',
     'sidebar'

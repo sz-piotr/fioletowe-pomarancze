@@ -1,0 +1,33 @@
+{
+    "shares": [{
+        "owner": "Piotr Szlachciak",
+        "name": "obrazki",
+        "paths": [{
+            "name": "ładne"
+        }, {
+            "name": "brzydkie"
+        }]
+    }, {
+        "owner": "Piotr Szlachciak",
+        "name": "dokumenty",
+        "paths": [{
+            "name": "studia"
+        }, {
+            "name": "pr0n"
+        }, {
+            "name": "inne"
+        }]
+    }, {
+        "owner": "John Snow",
+        "name": "The Wall",
+        "paths": [{
+            "name": "Castle Black"
+        }, {
+            "name": "Lord Commander's Chamber"
+        }]
+    }, {
+        "owner": "John Snow",
+        "name": "knowledge",
+        "paths": []
+    }]
+}

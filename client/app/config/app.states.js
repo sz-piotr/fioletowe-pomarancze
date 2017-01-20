@@ -4,7 +4,7 @@ angular.module('fioletoweApp')
     .config(function ($urlRouterProvider, $stateProvider) {
         $urlRouterProvider.when('', '/login');
         $urlRouterProvider.when('/', '/login');
-        $urlRouterProvider.when('/main', '/main/userbrowser');
+        $urlRouterProvider.when('/main', '/main/remote');
         $stateProvider
             .state('login', {
                 url: '/login',
@@ -26,8 +26,8 @@ angular.module('fioletoweApp')
                 url: '/options',
                 component: 'options'
             })
-            .state('main.fsbrowser', {
-                url: '/fsbrowser',
-                component: 'fsBrowser'
+            .state('main.remote', {
+                url: '/remote',
+                component: 'remoteBrowser'
             });
     });
