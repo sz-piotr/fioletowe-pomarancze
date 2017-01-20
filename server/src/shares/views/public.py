@@ -13,7 +13,7 @@ def list_shares():
         'shares': [{
             'owner': 'name',
             'name': 'sharename',
-            'paths': [{'name': 'name'}, ...]
+            'paths': [{'name': 'name'}]
         }]
     })
 
