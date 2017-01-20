@@ -1,11 +1,10 @@
 import jwt
 from datetime import timedelta, datetime
-from auth import secret, token_duration
+from auth import secret
 
 def encode(user):
     payload = {
-        'sub': user.id,
-        'exp': datetime.utcnow() + timedelta(seconds=token_duration)
+        'sub': user.id
     }
     return jwt.encode(payload, secret, algorithm='HS256')
 
