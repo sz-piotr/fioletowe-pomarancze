@@ -9,10 +9,9 @@ angular
             var self = this;
             this.login = () => {
                 if (!$scope.loginform.$invalid) {
-                    console.log('login');
                     AuthService.login(this.user, this.pass)
                         .then(response => {
-                            $location.path('menu');
+                            $location.path('main');
                         }, error => {
                             self.error = true;
                             $timeout(self.reset);

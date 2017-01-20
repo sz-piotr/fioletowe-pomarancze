@@ -3,5 +3,6 @@
 angular.module('main', [
     'fsBrowser',
     'shareBrowser',
-    'userBrowser'
+    'userBrowser',
+    'sidebar'
 ]);
