@@ -15,22 +15,24 @@ def list():
     # TODO implement
     return jsonify({
         'devices': [{
-            'name': 'name'
+            'name': 'name',
+            'address': 'ip:port'
         }]
     })
 
 
-@devices.route('/devices', methods=['POST'])
+@devices.route('/devices/<device_name>', methods=['POST'])
 @login_required
 @request_schema(schemas.add_devices)
-def add():
+def add(device_name):
     # TODO implement
+    print('Adding: ', device_name)
     return ('', HTTPStatus.NO_CONTENT)
 
 
-@devices.route('/devices', methods=['DELETE'])
+@devices.route('/devices/<device_name>', methods=['DELETE'])
 @login_required
-@request_schema(schemas.remove_devices)
-def remove():
+def remove(device_name):
     # TODO implement
+    print('Removing: ', device_name)
     return ('', HTTPStatus.NO_CONTENT)
