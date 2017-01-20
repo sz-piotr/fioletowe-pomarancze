@@ -11,3 +11,26 @@
     color: red;
     font-weight: bold;
 }
+
+.filterbox {
+    position:fixed;
+    bottom:0;
+    right:0;
+    padding:0.2em;
+    border-radius:0.2em 0 0 0;
+    background: #eee;
+    border: 1px solid #aaa;
+}
+
+.filterbox input {
+    background:#ddd;
+    width:3em;
+    border-radius:0.2em 0 0 0;
+    transition: all 200ms;
+}
+
+.filterbox input:active, .filterbox input:hover {
+    background:#fff;
+    width:14em;
+    transition: all 100ms;
+}

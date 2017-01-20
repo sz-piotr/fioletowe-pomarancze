@@ -6,4 +6,6 @@ angular.module('fioletoweApp', [
     'core',
     'users',
     'main',
+    'menu',
+    'options'
 ]);

@@ -7,18 +7,18 @@
             <form class="user-form">
                 <div class="form-group">
                     <label for="loginInputUsername">Username</label>
-                    <input type="text" class="form-control" id="loginInputUsername">
+                    <input ng-model="$ctrl.user" type="text" class="form-control" id="loginInputUsername">
                 </div>
                 <div class="form-group">
                     <label for="loginInputEmail">Email</label>
-                    <input type="email" class="form-control" id="loginInputUsername" placeholder="your.mail@example.com">
+                    <input ng-model="$ctrl.mail" type="email" class="form-control" id="loginInputUsername" placeholder="your.mail@example.com">
                 </div>
                 <div class="form-group">
                     <label for="loginInputPassword">Password</label>
-                    <input type="password" class="form-control" id="loginInputPassword" placeholder="password">
+                    <input ng-model="$ctrl.pass" type="password" class="form-control" id="loginInputPassword" placeholder="password">
                 </div>
                 <div class="text-center">
-                    <button class="btn btn-primary user-button">Create an account</button>
+                    <button ng-click="$ctrl.reg()" class="btn btn-primary user-button">Create an account</button>
                 </div>
             </form>
         </div>

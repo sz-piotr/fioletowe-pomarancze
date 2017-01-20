@@ -1,3 +1,9 @@
+<div class="rootMenu">
+    <div ng-click="$ctrl.go('userBrowser')" class="menubutt">Remote Shares</div>
+    <div ng-click="$ctrl.go('options')" class="menubutt">Options</div>
+</div>
+
+<!--
 <div class="container-fluid noselect user-page">
     <div class="centered">
         <div class="user-form-container">
@@ -10,17 +16,17 @@
                 
                 <div class="form-group" ng-class="{true: 'has-error'}[loginform.$submitted && loginform.username.$invalid]">
                     <label class="control-label" for="username">Username or email</label>
-                    <input ng-model="$ctrl.user" type="text" class="form-control"
+                    <input ng-model="user.name" type="text" class="form-control"
                             name="username" placeholder="your.mail@example.com" required />
 
                 </div>
 
                 <div class="form-group" ng-class="{true: 'has-error'}[loginform.$submitted && loginform.password.$invalid]">
                     <label class="control-label" for="password">Password</label>
-                    <input ng-model="$ctrl.pass" type="password" class="form-control"
-                            name="password" placeholder="Password" required />
+                    <input ng-model="user.password" type="password" class="form-control"
+                            name="password" placeholder="Password" required autocomplete="new-password" />
                 </div>
-
+                
                 <div class="text-center">
                     <input type="submit" ng-click="$ctrl.login()" class="btn btn-primary user-button" value="Log in"></button>
                 </div>
@@ -32,3 +38,4 @@
         </div>
     </div>
 </div>
+-->

@@ -1,5 +1,7 @@
 'use strict';
 
 angular.module('main', [
-    'fsBrowser'
+    'fsBrowser',
+    'shareBrowser',
+    'userBrowser'
 ]);

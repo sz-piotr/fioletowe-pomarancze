@@ -11,7 +11,8 @@
         "min_height": 600
     },
     "dependencies": {
-        "bower": "^1.8.0"
+        "bower": "^1.8.0",
+	"minimist":"^0.0.10"
     },
     "scripts": {
         "postinstall": "bower install"

@@ -5,20 +5,30 @@ angular
     .component('login', {
         templateUrl: 'users/login/login.html',
         css: 'users/users.css',
-        controller: function LoginController($scope, $timeout, $location) {
+        controller: function LoginController($scope, $timeout, $location, $http) {
+            var self = this;
             this.login = () => {
+                var dat = {
+                    username:this.user,
+                    password:this.pass
+                };
+                console.log('asd',dat);
                 if (!$scope.loginform.$invalid) {
-                    if($scope.user.name === 'admin' && $scope.user.password === 'admin') {
-                        $location.path('main');
-                    } else {
-                        this.error = true;
-                        $timeout(this.reset);
-                    }
+                    $http.post(`${global.cfg.server}/api/login`,JSON.stringify(dat)).then(function(response){
+                        console.log(response);
+                        localStorage.jwt=response.data.token;
+                        $location.path('menu');
+                    }, function(response){
+                        console.error(response);
+                        self.error=true;
+                        $timeout(self.reset);
+                    });
                 }
             };
 
             this.reset = () => {
-                $scope.user = {};
+                this.email='';
+                this.pass='';
                 $scope.loginform.$setPristine();
                 $scope.loginform.$setUntouched();
             }

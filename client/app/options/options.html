@@ -1,0 +1,83 @@
+<div class="options">
+    <h1>User groups:</h1>
+    <ul>
+        <li ng-repeat="group in $ctrl.groups">
+            <details>
+                <summary>{{group.name}}</summary>
+                <span>Members:</span>
+                <ul>
+                    <li ng-repeat="member in group.members">
+                        {{member.name}} ({{member.email}}) <button ng-click="$ctrl.delMember(member.email, group.name)">X</button>
+                    </li>
+                </ul>
+                <span>Add member:</span>
+                <input ng-model="$ctrl.newMemberEmail" placeholder="Email"></input>
+                <button ng-click="$ctrl.addMember($ctrl.newMemberMail, group.name)">Add</button>
+
+                <span>Shares:</span>
+                <ul>
+                    <li ng-repeat="share in group.shares">
+                        {{share.name}} <button ng-click="$ctrl.delGroupShare(share.name,group.name)">X</button>
+                    </li>
+                </ul>
+
+                <span>Add share:</span>
+                <select ng-model="$ctrl.newGroupShare">
+                    <option ng-repeat="share in $ctrl.shares">{{share.name}}</option>
+                </select>
+                <button ng-click="$ctrl.addGroupShare($ctrl.newGroupShare, group.name)">Add</button>
+
+                <button ng-click="$ctrl.delGroup(group.name)">Delete group</button>
+            </details>
+        </li>
+        <span>Add group:</span>
+        <input ng-model="$ctrl.newGroupName" placeholder="Name"></input>
+        <button ng-click="$ctrl.addGroup($ctrl.newGroupName)">Add</button>
+    </ul>
+
+    <h1>Your devices:</h1>
+    <span ng-if="$ctrl.devices.length == 0">You have no registered devices!</span>
+    <span>This device: {{$ctrl.currentDev}}</span>
+    <ul>
+        <li ng-repeat="device in $ctrl.devices">
+            <details>
+                <summary>{{device.name}}</summary>
+                <div>
+                    <span>Address: {{device.address}}</span>
+                    <button ng-click="$ctrl.bindDev(device.name,device.address)">Bind as this device</button>
+                    <span>Shares:</span>
+                    <ul>
+                        <li ng-repeat="share in $ctrl.shares | filter:{device:device.name}">
+                            <details>
+                                <summary>{{share.name}}</summary>
+                                <ul>
+                                    <li ng-repeat="path in share.paths">
+                                        {{path.name}} ({{path.path}}) <button ng-click="$ctrl.delPath(path.name,share.name)">X</button>
+                                    </li>
+                                </ul>
+
+                                <span>Add path:</span>
+                                <input ng-model="$ctrl.newPathShareName" placeholder="Name"/>
+                                <input type="file" nwdirectory ng-model="$ctrl.newSharePath"/>
+                                <button ng-click="$ctrl.addPath($ctrl.newPathShareName,$ctrl.newSharePath,share.name)">Add</button>
+
+                                <button ng-click="$ctrl.delShare(share.name)">Delete share</button>
+                            </details>
+                        </li>
+                    </ul>
+
+                    <span>Add share:</span>
+                    <input ng-model="$ctrl.newShareName" placeholder="Name"></input>
+                    <button ng-click="$ctrl.addShare($ctrl.newShareName, device.name)">Add</button>
+
+                    <button ng-click="$ctrl.delDevice(device.name)">Delete device</button>
+                </div>
+            </details>
+        </li>
+    </ul>
+
+    <span>Add device:</span>
+    <input ng-model="$ctrl.newDeviceName" placeholder="Name"></input>
+    <input ng-model="$ctrl.newDeviceAddress" placeholder="Address (IP:port)"></input>
+    <button ng-click="$ctrl.addDevice($ctrl.newDeviceName,$ctrl.newDeviceAddress)">Add</button>
+</div>

@@ -1,4 +1,21 @@
-<div class="container-fluid noselect">
+<div class="userBrowser">
+    <h1>Your friends:</h1>
+    <span ng-if="$ctrl.shares.length == 0">Sorry you have no friends. Go out and ask someone to share files with you!</span>
+    <details ng-repeat="owner in $ctrl.shares">
+        <summary>{{owner.owner}} ({{owner.owner.shares.length}} shares)</summary>
+        <div ng-repeat="share in owner.shares">
+            <span>{{share.name}}</span>
+            <ul>
+                <li ng-repeat="path in share">
+                    <span ng-click="$ctrl.open(owner.owner,share.name,path.name)">{{path.name}}</span>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+
+<!--<div class="container-fluid noselect">
     <ol class="breadcrumb breadcrumb-fix">
         <li ng-repeat="file in $ctrl.breadcrumbs">
             <a ng-click="$ctrl.setDir(file);" class="click">
@@ -32,3 +49,4 @@
         </tbody>
     </table>
 </div>
+-->

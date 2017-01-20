@@ -1,7 +1,21 @@
 'use strict';
 
 angular.module('fioletoweApp')
-    .config(function($compileProvider, $routeProvider) {
+    .factory('JWThttpRequestInterceptor', function(){
+        return {
+            request: function(config){
+                var jwt = localStorage['jwt'];
+                if (jwt)
+                    config.headers['Authorization']='Bearer '+jwt;
+                else
+                    delete config.headers['Authorization'];
+
+                return config;
+            }
+        }
+    })
+    .config(function($compileProvider, $routeProvider, $httpProvider) {
+        $httpProvider.interceptors.push('JWThttpRequestInterceptor');
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*((https?|ftp|file|blob|chrome-extension):|data:image\/)/);
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|chrome-extension):/);
 
@@ -12,6 +26,27 @@ angular.module('fioletoweApp')
                 template: '<signup></signup>'
             }).when('/main', {
                 template: '<fs-browser></fs-browser>'
+            }).when('/menu',{
+                template: '<root-menu></root-menu>'
+            }).when('/userBrowser',{
+                template: '<user-browser></user-browser>'
+            }).when('/shareBrowser',{
+                template: '<share-browser></share-browser>'
+            }).when('/options', {
+                template: '<options></options>'
             })
             .otherwise('/login');
     });
+
+global.cfg=require('minimist')(require('nw.gui').App.argv,{
+    string:['server'],
+    number:['port'],
+    alias:{
+        server:['s'],
+        port:['p']
+    },
+    default:{
+        server:'http://127.0.0.1:5000',
+        port:'8111'
+    }
+});

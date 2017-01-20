@@ -1,0 +1,19 @@
+.rootMenu {
+    display:flex;
+    flex-direction: row;
+    flex-wrap:nowrap;
+    justify-content: center;
+    align-items: center;
+    height:100%;
+    width:100%;
+    position:absolute;
+}
+
+.menubutt {
+    font-family: sans-serif;
+    width:10em;
+    height:10em;
+    margin:2em;
+    background:#eee;
+    border: 1px solid #aaa
+}

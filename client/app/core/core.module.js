@@ -1,5 +1,5 @@
 'use strict';
 
 angular.module('core', [
-    'core.fileSystem'
+    'core.fileSystem',
 ]);
