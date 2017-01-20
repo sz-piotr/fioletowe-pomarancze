@@ -21,8 +21,13 @@ angular.module('fioletoweApp')
             .state('main.userbrowser', {
                 url: '/userbrowser',
                 component: 'userBrowser'
-            }).state('main.options', {
+            })
+            .state('main.options', {
                 url: '/options',
                 component: 'options'
+            })
+            .state('main.fsbrowser', {
+                url: '/fsbrowser',
+                component: 'fsBrowser'
             });
     });
