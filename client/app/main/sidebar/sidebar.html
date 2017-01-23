@@ -1,7 +1,16 @@
-<div id="sidebar-wrapper">
-    <ul>
-        <li><a ui-sref="main.userbrowser">Users</a></li>
-        <li><a ui-sref="main.options">Options</a></li>
-        <li><a ui-sref="main.remote">Remote Browser</a></li>
+<div id="sidebar-wrapper" role="navigation">
+    <ul class="sidebar-nav">
+        <li class="sidebar-brand text-center">
+            Fioletowe Pomarańcze
+        </li>
+        <li ui-sref-active="open">
+            <a ui-sref="main.userbrowser">Users</a>
+        </li>
+        <li ui-sref-active="open">
+            <a ui-sref="main.options">Options</a>
+        </li>
+        <li ui-sref-active="open">
+            <a ui-sref="main.remote">Remote Browser</a>
+        </li>
     </ul>
 </div>
