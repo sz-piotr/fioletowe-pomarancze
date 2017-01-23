@@ -4,9 +4,20 @@
     float: left;
 }
 
+#top-wrapper {
+    width: 100%;
+    height: 52px;
+}
+
+#main-wrapper {
+    width: 100%;
+    height: calc(100% - 52px);
+    padding-top: 20px;
+}
+
 #right-wrapper {
     width: calc(100% - 200px);
     height: 100vh;
     float: right;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
