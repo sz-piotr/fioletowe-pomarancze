@@ -1,4 +1,3 @@
-
 'use strict';
 
-angular.module('shareBrowser', []);
+angular.module('main.shareBrowser', []);

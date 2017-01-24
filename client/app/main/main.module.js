@@ -2,7 +2,7 @@
 
 angular.module('main', [
     'main.remoteBrowser',
-    'shareBrowser',
+    'main.shareBrowser',
     'userBrowser',
     'sidebar',
     'navbar'

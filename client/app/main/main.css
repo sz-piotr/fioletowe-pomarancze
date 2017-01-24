@@ -12,7 +12,6 @@
 #main-wrapper {
     width: 100%;
     height: calc(100% - 52px);
-    padding-top: 20px;
 }
 
 #right-wrapper {
