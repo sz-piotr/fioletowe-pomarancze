@@ -14,16 +14,8 @@ angular
                             $location.path('/login');
                         }, error => {
                             this.error = error.data.msg;
-                            $timeout(this.reset);
                         });
                 }
-            }
-
-            this.reset = () => {
-                delete this.email;
-                delete this.pass;
-                $scope.loginform.$setPristine();
-                $scope.loginform.$setUntouched();
             }
         }
     });

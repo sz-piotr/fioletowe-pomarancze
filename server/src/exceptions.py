@@ -26,6 +26,11 @@ class MalformedJsonError(ApiException):
     def __init__(self):
         ApiException.__init__(self, message='Malformed JSON', code='MALFORMED_JSON')
 
+class ValidationError(ApiException):
+
+    def __init__(self, message='Validation failed'):
+        ApiException.__init__(self, message=message, code='VALIDATION_FAILED')
+
 
 class AlreadyExistsError(ApiException):
 

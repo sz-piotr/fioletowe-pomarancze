@@ -3,11 +3,14 @@ from users.models import User
 from flask import jsonify, request, g
 from sqlalchemy.exc import IntegrityError
 from http import HTTPStatus
-from exceptions import AlreadyExistsError, MalformedJsonError
+from exceptions import AlreadyExistsError, MalformedJsonError, ValidationError
 from application import db
 from auth.decorators import login_required
 from util.decorators import request_schema
+import re
 
+username_format = re.compile('\w+')
+email_format = re.compile('[\w\.]+@[\w\.]+\.\w+')
 
 @users.route('/users', methods=['GET'])
 @login_required
@@ -20,6 +23,10 @@ def list():
 @request_schema(schemas.add_user)
 def add():
     # TODO add email confirmation
+    if username_format.fullmatch(g.data['username']) == None:
+        raise ValidationError('Username must can only contain letters, numbers and underscores')
+    if email_format.fullmatch(g.data['email']) == None:
+        raise ValidationError('Email is not valid')
     try:
         user = User(
             username=g.data['username'],

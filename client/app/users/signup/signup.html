@@ -10,13 +10,19 @@
                 <div class="form-group" ng-class="{true: 'has-error'}[signupform.$submitted && signupform.username.$invalid]">
                     <label class="control-label" for="username">Username</label>
                     <input ng-model="$ctrl.user" type="text" class="form-control"
-                            name="username" required />
+                            name="username" ng-pattern="/^\w+$/" required />
+                    <span class="help-block" ng-show="signupform.$submitted && signupform.email.$error.pattern">
+                        The username can only consist of letters, numbers and underscores.
+                    </span>
                 </div>
 
                 <div class="form-group" ng-class="{true: 'has-error'}[signupform.$submitted && signupform.email.$invalid]">
                     <label class="control-label" for="email">E-mail</label>
                     <input ng-model="$ctrl.mail" type="text" class="form-control"
-                            name="email" placeholder="your.mail@example.com" required />
+                            name="email" placeholder="your.mail@example.com" ng-pattern="/^[\w\.]+@[\w\.]+\.\w+$/" required />
+                    <span class="help-block" ng-show="signupform.$submitted && signupform.email.$error.pattern">
+                        Please provide a valid e-mail address.
+                    </span>
                 </div>
 
                 <div class="form-group" ng-class="{true: 'has-error'}[signupform.$submitted && signupform.password.$invalid]">
