@@ -8,7 +8,13 @@ angular
         controller: function ShareBrowserController(ShareService) {
             ShareService.query()
                 .then(
-                    response => this.devices = response,
+                    response => {
+                        this.devices = response;
+                        this.shares = [];
+                        this.devices.forEach(device => {
+                            this.shares = this.shares.concat(device.shares);
+                        });
+                    },
                     error => this.error = error.message
                 );
         }

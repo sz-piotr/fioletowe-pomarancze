@@ -97,3 +97,7 @@
     padding: 0px 5px;
     background-color: #f0f0f0;
 }
+
+.monospaced {
+    font-family: monospace;
+}
