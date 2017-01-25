@@ -6,7 +6,7 @@ angular
         templateUrl: 'main/share-browser/share-browser.html',
         css: 'main/share-browser/share-browser.css',
         controller: function ShareBrowserController(ShareService) {
-            ShareService.query()
+            this.update = () => ShareService.query()
                 .then(
                     response => {
                         this.devices = response;
@@ -17,5 +17,31 @@ angular
                     },
                     error => this.error = error.message
                 );
+
+            this.deleteDevice = device => {
+                this.item = {
+                    name: device.name,
+                    type: 'device'
+                }
+                $('#delete-modal').modal('show');
+            };
+
+            this.deleteShare = share => {
+                this.item = {
+                    name: share.name,
+                    type: 'share'
+                }
+                $('#delete-modal').modal('show');
+            };
+
+            this.deletePath = path => {
+                this.item = {
+                    name: path.name,
+                    type: 'path'
+                }
+                $('#delete-modal').modal('show');
+            };
+
+            this.update();
         }
     });

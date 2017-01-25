@@ -12,14 +12,14 @@
             <span class="device-name">{{ device.name }}</span>
             <span class="device-address">[{{ device.address }}]</span>
             <div class="flex-right text-larger">
-                <span class="click glyphicon glyphicon-remove"></span>
+                <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deleteDevice(device)"></span>
             </div>
         </li>
         <ul class="shares-list control-list" ng-repeat-end>
             <li ng-repeat-start="share in device.shares">
                 {{ share.name }}
                 <div class="flex-right">
-                    <span class="click glyphicon glyphicon-remove"></span>
+                    <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deleteShare(share)"></span>
                 </div>
             </li>
             <ul class="paths-list control-list" ng-repeat-end>
@@ -28,7 +28,7 @@
                     <span class="path-name">{{ path.name }}</span>
                     <span class="path-value">{{ path.path }}</span>
                     <div class="flex-right">
-                        <span class="click glyphicon glyphicon-remove"></span>
+                        <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deletePath(path)"></span>
                     </div>
                 </li>
             </ul>
@@ -149,6 +149,28 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary">Add new path</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-centered fade" id="delete-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h4 class="modal-title">Are you sure?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <p>Really delete {{ $ctrl.item.type }}: <strong>{{ $ctrl.item.name }}</strong>?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger">Delete</button>
             </div>
         </div>
     </div>
