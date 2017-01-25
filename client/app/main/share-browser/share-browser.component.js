@@ -7,6 +7,9 @@ angular
         css: 'main/share-browser/share-browser.css',
         controller: function ShareBrowserController(ShareService) {
             ShareService.query()
-                .then(response => this.devices = response);
+                .then(
+                    response => this.devices = response,
+                    error => this.error = error.message
+                );
         }
     });
