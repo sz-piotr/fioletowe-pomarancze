@@ -6,65 +6,30 @@
     </div>
 
     <ul class="devices-list control-list">
-        <li>
-            <span class="device-name">MyDevice</span>
-            <span class="device-address">[127.0.0.1:8111]</span>
+        <li ng-repeat-start="device in $ctrl.devices">
+            <span class="device-name">{{ device.name }}</span>
+            <span class="device-address">[{{ device.address }}]</span>
             <div class="flex-right text-larger">
                 <span class="click glyphicon glyphicon-remove"></span>
             </div>
         </li>
-        <ul class="shares-list control-list">
-            <li>
-                Images
+        <ul class="shares-list control-list" ng-repeat-end>
+            <li ng-repeat-start="share in device.shares">
+                {{ share.name }}
                 <div class="flex-right">
                     <span class="click glyphicon glyphicon-remove"></span>
                 </div>
             </li>
-            <li>
-                Music
-                <div class="flex-right">
-                    <span class="click glyphicon glyphicon-remove"></span>
-                </div>
-            </li>
-            <ul class="paths-list control-list">
-                <li>
+            <ul class="paths-list control-list" ng-repeat-end>
+                <li ng-repeat="path in share.paths">
                     <span class="glyphicon glyphicon-book"></span>
-                    <span class="path-name">Rock</span>
-                    <span class="path-value">/home/Piotr/music/rock</span>
-                    <div class="flex-right">
-                        <span class="click glyphicon glyphicon-remove"></span>
-                    </div>
-                </li>
-                <li>
-                    <span class="glyphicon glyphicon-book"></span>
-                    <span class="path-name">Pop</span>
-                    <span class="path-value">/home/Piotr/music/pop</span>
-                    <div class="flex-right">
-                        <span class="click glyphicon glyphicon-remove"></span>
-                    </div>
-                </li>
-                <li>
-                    <span class="glyphicon glyphicon-book"></span>
-                    <span class="path-name">Edm</span>
-                    <span class="path-value">/home/Piotr/music/edm</span>
+                    <span class="path-name">{{ path.name }}</span>
+                    <span class="path-value">{{ path.path }}</span>
                     <div class="flex-right">
                         <span class="click glyphicon glyphicon-remove"></span>
                     </div>
                 </li>
             </ul>
-            <li>
-                Whatever
-                <div class="flex-right">
-                    <span class="click glyphicon glyphicon-remove"></span>
-                </div>
-            </li>
         </ul>
-        <li>
-            <span class="device-name">MyDevice 2</span>
-            <span class="device-address">[127.0.0.1:8111]</span>
-            <div class="flex-right text-larger">
-                <span class="click glyphicon glyphicon-remove"></span>
-            </div>
-        </li>
     </ul>
 </div>

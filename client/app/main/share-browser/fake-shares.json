@@ -1,0 +1,36 @@
+{
+    "shares": [{
+        "name": "gry-windows",
+        "device": "KomputerPC",
+        "paths": [{
+            "name": "GtaV",
+            "path": "c:/Program Files (x86)/Rockstar/Gta V/"
+        }, {
+            "name": "Skyrim",
+            "path": "c:/GOG Games/Skyrim/"
+        }, {
+            "name": "2048",
+            "path": "c:/Program Files (x86)/Games/2048/"
+        }]
+    }, {
+        "name": "muzyka",
+        "device": "KomputerPC",
+        "paths": [{
+            "name": "rock",
+            "path": "e:/Music/public/rock/"
+        }, {
+            "name": "pop",
+            "path": "e:/Music/public/pop/"
+        }, {
+            "name": "edm",
+            "path": "e:/Music/public/electronic/dance/"
+        }]
+    }, {
+        "name": "name",
+        "device": "Laptop",
+        "paths": [{
+            "name": "name",
+            "path": "path"
+        }]
+    }]
+}
