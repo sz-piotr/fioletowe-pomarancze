@@ -39,3 +39,7 @@
     text-align: left;
     vertical-align: middle;
 }
+
+.glyphicon {
+    top: 0.15em;
+}

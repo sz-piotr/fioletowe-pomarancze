@@ -24,10 +24,9 @@
             </li>
             <ul class="paths-list control-list" ng-repeat-end>
                 <li ng-repeat="path in share.paths">
-                    <span class="glyphicon glyphicon-book"></span>
                     <span class="path-name">{{ path.name }}</span>
                     <span class="path-value">{{ path.path }}</span>
-                    <div class="flex-right">
+                    <div class="flex-right path-remove">
                         <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deletePath(path)"></span>
                     </div>
                 </li>

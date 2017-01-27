@@ -47,7 +47,8 @@
 .devices-list>li {
     position: relative;
     overflow: hidden;
-    padding: 5px 15px;
+    padding: 2px 15px;
+    margin: 2px 0px;
     font-weight: bold;
     color: white;
     background-color: #18af83;
@@ -69,26 +70,23 @@
 
 .shares-list>li {
     overflow: hidden;
-    padding: 3px 15px;
+    padding: 2px 15px;
+    margin: 1px 0px;
     font-size: 15px;
     font-weight: bold;
     background-color: #f0f0f0;
 }
 
-.shares-list>li:nth-of-type(odd) {
-    background-color: #fafafa;
-}
-
 .paths-list>li {
     overflow: hidden;
-    padding: 3px 15px;
+    padding: 1px 18px 1px 30px;
     font-size: 15px;
     font-weight: bold;
     background-color: white;
 }
 
-.path-name {
-    margin-left: 5px;
+.path-remove {
+    font-size: 10px;
 }
 
 .path-value {
