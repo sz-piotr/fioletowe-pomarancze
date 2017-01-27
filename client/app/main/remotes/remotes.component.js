@@ -1,11 +1,11 @@
 'use strict';
 
 angular
-    .module('main.remoteBrowser')
-    .component('remoteBrowser', {
-        templateUrl: 'main/remote-browser/remote-browser.html',
-        css: 'main/remote-browser/remote-browser.css',
-        controller: function RemoteBrowserController(RemoteService) {
+    .module('main.remotes')
+    .component('remotes', {
+        templateUrl: 'main/remotes/remotes.html',
+        css: 'main/remotes/remotes.css',
+        controller: function RemotesController(RemotesService) {
 
             this.goto = node => {
                 this.node = node;
@@ -16,6 +16,6 @@ angular
                 });
             }
 
-            this.goto(RemoteService.get('/'));
+            this.goto(RemotesService.get('/'));
         }
     });

@@ -1,9 +1,8 @@
 'use strict';
 
 angular.module('main', [
-    'main.remoteBrowser',
-    'main.shareBrowser',
-    'userBrowser',
+    'main.remotes',
+    'main.shares',
     'sidebar',
     'navbar'
 ]);

@@ -18,16 +18,12 @@ angular.module('fioletoweApp')
                 url: '/main',
                 component: 'main'
             })
-            .state('main.userbrowser', {
-                url: '/userbrowser',
-                component: 'userBrowser'
-            })
-            .state('main.shareBrowser', {
+            .state('main.shares', {
                 url: '/shares',
-                component: 'shareBrowser'
+                component: 'shares'
             })
-            .state('main.remote', {
-                url: '/remote',
-                component: 'remoteBrowser'
+            .state('main.remotes', {
+                url: '/remotes',
+                component: 'remotes'
             });
     });

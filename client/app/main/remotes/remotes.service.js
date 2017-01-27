@@ -1,8 +1,8 @@
 'use strict';
 
 angular
-    .module('main.remoteBrowser')
-    .factory('RemoteService', function RemoteService($q, $http) {
+    .module('main.remotes')
+    .factory('RemotesService', function RemotesService($q, $http) {
         function asQuery(filepath) {
             filepath = filepath.split('/').filter(x => x !== '');
             return {
@@ -81,7 +81,7 @@ angular
                 return $q((resolve, reject) => {
                     let query = asQuery(this.path);
                     if (query.path === '') {
-                        $http.get('main/remote-browser/fake-data.json')
+                        $http.get('main/remotes/fake-data.json')
                             .then(response => {
                                 let tree = asTree(response.data.shares);
                                 global.tree = tree;

@@ -1,12 +1,12 @@
 'use strict';
 
 angular
-    .module('main.shareBrowser')
-    .component('shareBrowser', {
-        templateUrl: 'main/share-browser/share-browser.html',
-        css: 'main/share-browser/share-browser.css',
-        controller: function ShareBrowserController(ShareService) {
-            this.update = () => ShareService.query()
+    .module('main.shares')
+    .component('shares', {
+        templateUrl: 'main/shares/shares.html',
+        css: 'main/shares/shares.css',
+        controller: function SharesController(SharesService) {
+            this.update = () => SharesService.query()
                 .then(
                     response => {
                         this.devices = response;
