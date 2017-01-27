@@ -43,3 +43,42 @@
 .glyphicon {
     top: 0.15em;
 }
+
+.control-list {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.control-list>li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.control-list.primary>li {
+    position: relative;
+    overflow: hidden;
+    padding: 2px 15px;
+    margin: 2px 0px;
+    font-weight: bold;
+}
+
+.control-list.secondary>li {
+    overflow: hidden;
+    padding: 2px 15px;
+    margin: 1px 0px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.monospaced {
+    font-family: monospace;
+}
+
+.flex-right {
+    margin-left: auto;
+}
+
+.text-larger {
+    font-size: 1.2em;
+}

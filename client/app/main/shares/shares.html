@@ -7,7 +7,7 @@
         <button class="btn btn-primary" data-toggle="modal" data-target="#add-path-modal">Add path</button>
     </div>
 
-    <ul class="devices-list control-list">
+    <ul class="devices-list control-list primary">
         <li ng-repeat-start="device in $ctrl.devices">
             <span class="device-name">{{ device.name }}</span>
             <span class="device-address">[{{ device.address }}]</span>
@@ -15,7 +15,7 @@
                 <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deleteDevice(device)"></span>
             </div>
         </li>
-        <ul class="shares-list control-list" ng-repeat-end>
+        <ul class="shares-list control-list secondary" ng-repeat-end>
             <li ng-repeat-start="share in device.shares">
                 {{ share.name }}
                 <div class="flex-right">

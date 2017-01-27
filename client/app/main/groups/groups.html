@@ -1,1 +1,20 @@
-Groups
+<div id="groups-wrapper" class="container-fluid">
+    <ul class="groups-list control-list primary">
+        <li ng-repeat-start="group in $ctrl.groups">
+            <span class="group-name">{{ group.name }}</span>
+            <div class="flex-right text-larger">
+                <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deleteGroup(group)"></span>
+            </div>
+        </li>
+        <ul ng-repeat-end class="items-list control-list secondary">
+            <li>Shares</li>
+            <ul>
+                <li ng-repeat="share in group.shares">{{ share.name }}</li>
+            </ul>
+            <li>Members</li>
+            <ul>
+                <li ng-repeat="member in group.members">{{ member.email }}</li>
+            </ul>
+        </ul>
+    </ul>
+</div>
