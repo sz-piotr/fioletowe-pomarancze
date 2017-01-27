@@ -1,9 +1,9 @@
 {
-    "devices": [{
-        "name": "KomputerPC",
-        "address": "127.0.0.1:8111"
-    }, {
-        "name": "Laptop",
-        "address": "127.0.0.1:8111"
-    }]
+  "devices": [{
+    "name": "KomputerPC",
+    "address": "127.0.0.1:8111"
+  }, {
+    "name": "Laptop",
+    "address": "127.0.0.1:8111"
+  }]
 }

@@ -1,0 +1,12 @@
+{
+  "groups": [{
+    "name": "name",
+    "shares": [{
+      "name": "name"
+    }],
+    "members": [{
+      "email": "email",
+      "name": "name"
+    }]
+  }]
+}
