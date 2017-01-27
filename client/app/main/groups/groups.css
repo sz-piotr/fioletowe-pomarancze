@@ -2,6 +2,10 @@
     padding-top: 20px;
 }
 
+#buttons-wrapper {
+    margin-bottom: 10px;
+}
+
 .groups-list>li {
     color: white;
     background-color: #efbd00;
@@ -14,6 +18,32 @@
     font-weight: bold;
 }
 
-.items-list>li {
+.group-sublist>li {
     background-color: #f0f0f0;
+}
+
+.items-list {
+    list-style-type: none;
+    padding: 1px 25px;
+    overflow: hidden;
+}
+
+.items-list>li {
+    float: left;
+    display: block;
+    margin: 1px 2px;
+    padding: 1px 6px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.items-list>li.add-button {
+    color: white;
+    font-weight: normal;
+    background-color: #8d29a6;
+}
+
+.items-list>li.add-button:hover {
+    background-color: #286090;
 }

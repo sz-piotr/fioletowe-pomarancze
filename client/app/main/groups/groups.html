@@ -1,4 +1,7 @@
 <div id="groups-wrapper" class="container-fluid">
+    <div id="buttons-wrapper">
+        <button class="btn btn-primary">Add group</button>
+    </div>
     <ul class="groups-list control-list primary">
         <li ng-repeat-start="group in $ctrl.groups">
             <span class="group-name">{{ group.name }}</span>
@@ -6,14 +9,26 @@
                 <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deleteGroup(group)"></span>
             </div>
         </li>
-        <ul ng-repeat-end class="items-list control-list secondary">
+        <ul ng-repeat-end class="group-sublist control-list secondary">
             <li>Shares</li>
-            <ul>
-                <li ng-repeat="share in group.shares">{{ share.name }}</li>
+            <ul class="items-list">
+                <li ng-repeat="share in group.shares">
+                    {{ share.name }}
+                    <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deleteShare(shares)"></span>
+                </li>
+                <li class="click add-button">
+                    Add share
+                </li>
             </ul>
             <li>Members</li>
-            <ul>
-                <li ng-repeat="member in group.members">{{ member.email }}</li>
+            <ul class="items-list">
+                <li ng-repeat="member in group.members">
+                    {{ member.name }}&nbsp;({{ member.email }})
+                    <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deleteMember(member)"></span>
+                </li>
+                <li class="click add-button">
+                    Add member
+                </li>
             </ul>
         </ul>
     </ul>

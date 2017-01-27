@@ -1,6 +1,36 @@
 {
   "groups": [{
-    "name": "name",
+    "name": "name0",
+    "shares": [{
+      "name": "name0"
+    }, {
+      "name": "name1"
+    }, {
+      "name": "name2"
+    }, {
+      "name": "name3"
+    }],
+    "members": [{
+      "email": "email0",
+      "name": "name0"
+    }, {
+      "email": "email1",
+      "name": "name1"
+    }, {
+      "email": "email2",
+      "name": "name2"
+    }, {
+      "email": "email3",
+      "name": "name3"
+    }, {
+      "email": "email4",
+      "name": "name4"
+    }, {
+      "email": "email5",
+      "name": "name5"
+    }]
+  }, {
+    "name": "name1",
     "shares": [{
       "name": "name"
     }],
