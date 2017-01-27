@@ -4,7 +4,7 @@ angular.module('fioletoweApp')
     .config(function ($urlRouterProvider, $stateProvider) {
         $urlRouterProvider.when('', '/login');
         $urlRouterProvider.when('/', '/login');
-        $urlRouterProvider.when('/main', '/main/shares');
+        $urlRouterProvider.when('/main', '/main/groups');
         $stateProvider
             .state('login', {
                 url: '/login',
@@ -25,5 +25,9 @@ angular.module('fioletoweApp')
             .state('main.remotes', {
                 url: '/remotes',
                 component: 'remotes'
+            })
+            .state('main.groups', {
+                url: '/groups',
+                component: 'groups'
             });
     });
