@@ -1,21 +1,7 @@
-#shares-wrapper {
-    padding-top: 20px;
-}
-
-#buttons-wrapper {
-    margin-bottom: 10px;
-}
-
 .devices-list>li {
     color: white;
     background-color: #18af83;
     border-bottom: 3px solid #198b6a;
-}
-
-.device-name {
-    margin: 0;
-    font-size: 20px;
-    font-weight: bold;
 }
 
 .device-address {
@@ -31,7 +17,7 @@
 
 .paths-list>li {
     overflow: hidden;
-    padding: 1px 18px 1px 30px;
+    padding: 1px 21px 1px 30px;
     font-size: 15px;
     font-weight: bold;
     background-color: white;

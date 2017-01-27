@@ -1,11 +1,11 @@
-<div id="groups-wrapper" class="container-fluid">
-    <div id="buttons-wrapper">
+<div class="container-fluid page-wrapper">
+    <div class="buttons-wrapper">
         <button class="btn btn-primary">Add group</button>
     </div>
     <ul class="groups-list control-list primary">
         <li ng-repeat-start="group in $ctrl.groups">
             <span class="group-name">{{ group.name }}</span>
-            <div class="flex-right text-larger">
+            <div class="flex-right">
                 <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deleteGroup(group)"></span>
             </div>
         </li>

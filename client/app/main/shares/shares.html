@@ -1,7 +1,7 @@
-<div id="shares-wrapper" class="container-fluid">
+<div class="container-fluid page-wrapper">
     <div class="alert alert-danger" role="alert" ng-if="$ctrl.error">{{ $ctrl.error }}.</div>
 
-    <div id="buttons-wrapper">
+    <div class="buttons-wrapper">
         <button class="btn btn-primary" data-toggle="modal" data-target="#add-device-modal">Add device</button>
         <button class="btn btn-primary" data-toggle="modal" data-target="#add-share-modal">Add share</button>
         <button class="btn btn-primary" data-toggle="modal" data-target="#add-path-modal">Add path</button>
@@ -11,7 +11,7 @@
         <li ng-repeat-start="device in $ctrl.devices">
             <span class="device-name">{{ device.name }}</span>
             <span class="device-address">[{{ device.address }}]</span>
-            <div class="flex-right text-larger">
+            <div class="flex-right">
                 <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deleteDevice(device)"></span>
             </div>
         </li>

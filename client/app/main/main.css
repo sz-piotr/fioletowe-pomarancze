@@ -21,6 +21,14 @@
     overflow-y: auto;
 }
 
+.page-wrapper {
+    padding-top: 20px;
+}
+
+.buttons-wrapper {
+    margin-bottom: 10px;
+}
+
 .modal-centered {
     text-align: center;
     padding: 0!important;
@@ -55,17 +63,17 @@
     align-items: center;
 }
 
-.control-list.primary>li {
-    position: relative;
-    overflow: hidden;
+.control-list.primary>li,
+.control-panel.primary {
     padding: 2px 15px;
     margin: 2px 0px;
+    font-size: 20px;
     font-weight: bold;
 }
 
-.control-list.secondary>li {
-    overflow: hidden;
-    padding: 2px 15px;
+.control-list.secondary>li,
+.control-panel.secondary {
+    padding: 2px 18px 2px 15px;
     margin: 1px 0px;
     font-size: 15px;
     font-weight: bold;
@@ -77,8 +85,4 @@
 
 .flex-right {
     margin-left: auto;
-}
-
-.text-larger {
-    font-size: 1.2em;
 }

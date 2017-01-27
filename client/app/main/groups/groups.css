@@ -1,21 +1,7 @@
-#groups-wrapper {
-    padding-top: 20px;
-}
-
-#buttons-wrapper {
-    margin-bottom: 10px;
-}
-
 .groups-list>li {
     color: white;
     background-color: #efbd00;
     border-bottom: 3px solid #d7ac05;
-}
-
-.group-name {
-    margin: 0;
-    font-size: 20px;
-    font-weight: bold;
 }
 
 .group-sublist>li {

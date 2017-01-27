@@ -1,5 +1,8 @@
-<div class="container-fluid noselect top-pad">
-    <ol class="breadcrumb breadcrumb-fix">
+<div class="container-fluid page-wrapper">
+    <div class="buttons-wrapper">
+        <input type="text" class="form-control" placeholder="filter" ng-model="filter">
+    </div>
+    <ol class="remote-panel control-panel primary">
         <li ng-repeat="node in $ctrl.breadcrumbs">
             <a ng-click="$ctrl.goto(node);" class="click">
                 {{node.name}}
@@ -7,28 +10,17 @@
             </a>
         </li>
     </ol>
-    <span class="filterbox">
-        <input ng-model="$ctrl.filter" placeholder="filter"/>
-    </span>
     <div class="alert alert-danger" role="alert" ng-if="$ctrl.error">
         {{$ctrl.error}}
     </div>
-    <table class="table table-condensed table-hover">
-        <tbody>
-            <tr ng-click="$ctrl.goto(node);" ng-repeat="node in $ctrl.nodes | filter:$ctrl.filter">
-                <td ng-if="node.isDirectory()" class="folder click">
-                    <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
-                    {{node.name}}
-                </td>
-                <td ng-if="node.isFile()" class="noclick">
-                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                    {{node.name}}
-                </td>
-                <td ng-if="node.isUser()" class="folder click">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                    {{node.name}}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <ul class="file-list control-list secondary">
+        <li ng-repeat="node in $ctrl.nodes | filter:filter">
+            <span ng-click="$ctrl.goto(node);" class="click">
+                <span ng-if="node.isDirectory()" class="glyphicon glyphicon-folder-close"></span>
+                <span ng-if="node.isFile()" class="glyphicon glyphicon-file"></span>
+                <span ng-if="node.isUser()" class="glyphicon glyphicon-user"></span>
+                {{node.name}}
+            </span>
+        </li>
+    </ul>
 </div>
