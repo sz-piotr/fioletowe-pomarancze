@@ -12,6 +12,7 @@ class Device(db.Model, Serializer):
 
     user = db.relationship("User", back_populates="devices")
 
+    __table_args__ = (db.UniqueConstraint('name', 'user_id', name='name_user_uc'), )
 
     def __init__(self, name, address, user_id):
         self.name = name
