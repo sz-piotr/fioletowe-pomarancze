@@ -1,12 +1,15 @@
 <div class="container-fluid page-wrapper">
     <div class="buttons-wrapper">
-        <button class="btn btn-primary">Add group</button>
+        <button class="btn btn-primary" ng-click="$ctrl.openAddGroupModal()">Add group</button>
+    </div>
+    <div class="alert alert-danger" role="alert" ng-if="$ctrl.groupsError">
+        {{$ctrl.groupsError}}
     </div>
     <ul class="groups-list control-list primary">
         <li ng-repeat-start="group in $ctrl.groups">
             <span class="group-name">{{ group.name }}</span>
             <div class="flex-right">
-                <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deleteGroup(group)"></span>
+                <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.openRemoveGroupModal(group)"></span>
             </div>
         </li>
         <ul ng-repeat-end class="group-sublist control-list secondary">
@@ -14,9 +17,9 @@
             <ul class="items-list">
                 <li ng-repeat="share in group.shares">
                     {{ share.name }}
-                    <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deleteShare(shares)"></span>
+                    <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.openRemoveShareModal(share, group)"></span>
                 </li>
-                <li class="click add-button">
+                <li class="click add-button" ng-click="$ctrl.openAddShareModal(group)">
                     Add share
                 </li>
             </ul>
@@ -24,12 +27,137 @@
             <ul class="items-list">
                 <li ng-repeat="member in group.members">
                     {{ member.name }}&nbsp;({{ member.email }})
-                    <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deleteMember(member)"></span>
+                    <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.openRemoveMemberModal(member, group)"></span>
                 </li>
-                <li class="click add-button">
+                <li class="click add-button" ng-click="$ctrl.openAddMemberModal(group)">
                     Add member
                 </li>
             </ul>
         </ul>
     </ul>
+    <div class="loading" ng-show="$ctrl.loadingGroups">
+        <img src="images/loading.gif" />
+    </div>
+</div>
+
+<div class="modal modal-centered fade" id="add-group-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h4 class="modal-title">New group</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <form class="form-horizontal" name="addgroupform" novalidate>
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="name" ng-model="$ctrl.group.name">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Add new group</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-centered fade" id="add-share-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h4 class="modal-title">New share in group</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="loading" ng-show="$ctrl.loadingShares">
+                            <img src="images/loading.gif" />
+                        </div>
+                        <div class="alert alert-danger" role="alert" ng-if="$ctrl.addShareError && !$ctrl.loadingShares">
+                            {{$ctrl.addShareError}}
+                        </div>
+                        <form class="form-horizontal" name="addshareform" novalidate ng-show="!$ctrl.loadingShares">
+                            <div class="form-group">
+                                <label for="selectshare" class="col-sm-2 control-label">Share</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="selectshare"
+                                        ng-model="$ctrl.share.name"
+                                        ng-options="share.name for share in $ctrl.shares | filter:$ctrl.filterShares">
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Add new share</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-centered fade" id="add-member-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h4 class="modal-title">New member</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <form class="form-horizontal" name="addmemberform" novalidate>
+                            <div class="form-group">
+                                <label for="email" class="col-sm-2 control-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" name="email" ng-model="$ctrl.member.email">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Add new member</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-centered fade" id="delete-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h4 class="modal-title">Are you sure?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <p>Really delete {{ $ctrl.item.type }}: <strong>{{ $ctrl.item.name }}</strong>
+                            <span ng-if="$ctrl.item.from !== undefined">
+                                from {{ $ctrl.item.from.type }} <strong>{{ $ctrl.item.from.name }}</strong>
+                            </span>?
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
 </div>
