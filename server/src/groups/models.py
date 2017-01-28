@@ -1,6 +1,6 @@
 from application import db
 from serializer import Serializer
-
+from users.models import user_group_association
 
 class Group(db.Model, Serializer):
     __private__ = ('id')
@@ -11,6 +11,8 @@ class Group(db.Model, Serializer):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     user = db.relationship("User", back_populates="own_groups")
+
+    members = db.relationship("User", secondary=user_group_association, back_populates="in_groups")
 
     __table_args__ = (db.UniqueConstraint('name', 'user_id', name='group_name_user_id_uc'), )
 
