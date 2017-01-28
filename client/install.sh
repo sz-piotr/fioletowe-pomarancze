@@ -104,3 +104,5 @@ case "$NW_OS" in
         chmod +x run.bat
         ;;
 esac
+
+npm install
