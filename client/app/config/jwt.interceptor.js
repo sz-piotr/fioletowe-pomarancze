@@ -7,9 +7,6 @@ angular.module('fioletoweApp')
                 var jwt = localStorage['jwt'];
                 if (jwt)
                     config.headers['Authorization'] = 'Bearer ' + jwt;
-                else
-                    delete config.headers['Authorization'];
-
                 return config;
             }
         }
