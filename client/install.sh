@@ -92,15 +92,22 @@ rm -r .temp
 NW_FOLDER="nwjs-sdk-$NW_VERSION-$NW_OS-$NW_ARCH"
 case "$NW_OS" in
     linux )
-        printf "./dist/%s/nw ." "$NW_FOLDER" > run.sh
+        printf "#!/bin/bash\n./dist/%s/nw . \$@\n" "$NW_FOLDER" > run.sh
         chmod +x run.sh
         ;;
     osx )
-        printf "./dist/%s/nwjs.app/Contents/MacOS/nwjs ." "$NW_FOLDER" > run.sh
+        printf "#!/bin/bash\n./dist/%s/nwjs.app/Contents/MacOS/nwjs . \$@\n" "$NW_FOLDER" > run.sh
         chmod +x run.sh
         ;;
     win )
-        printf "dist\\%s\\%s ." "$NW_FOLDER" "nw.exe" > run.bat
+        printf "dist\\%s\\%s . %%*\n" "$NW_FOLDER" "nw.exe" > run.bat
         chmod +x run.bat
         ;;
 esac
+
+which npm
+if [ "x$?" == "x0" ] ; then
+    npm install
+else
+    echo "please install npm and run \"npm install\" in this directory"
+fi

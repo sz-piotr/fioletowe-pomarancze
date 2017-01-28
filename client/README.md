@@ -13,6 +13,7 @@ npm install
 
 ```
 ./run.sh
+./run.sh -v // jeśli chcemy debug
 ```
 
 ## Ale WTF
