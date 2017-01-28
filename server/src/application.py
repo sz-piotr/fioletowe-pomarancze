@@ -32,5 +32,5 @@ app.register_blueprint(memberships, url_prefix=api_prefix)
 app.register_blueprint(shares, url_prefix=api_prefix)
 app.register_blueprint(debug)
 	
-from application import db
-db.create_all()
+#from application import db
+#db.create_all()
