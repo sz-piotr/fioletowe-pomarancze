@@ -1,5 +1,6 @@
 from groups import groups, schemas
 from groups.models import Group
+from users.models import user_group_association, User
 from flask import jsonify, request, g
 from http import HTTPStatus
 from auth.decorators import login_required
@@ -12,17 +13,24 @@ from application import db
 @groups.route('/groups', methods=['GET'])
 @login_required
 def list():
-    # TODO implement
+    groups = Group.query.filter_by(user_id = g.auth['sub']).all()
+    groups = [out_group(group) for group in groups]
     return jsonify({
-        'groups': [{
-            'name': 'name',
-            'members': [{
-                'email': 'email',
-                'name': 'name'
-            }]
-        }]
+        'groups': groups
     })
 
+def out_group(group):
+    return {
+        'name': group.name,
+        'shares': [],
+        'members': [out_member(member) for member in group.members]
+    }
+
+def out_member(member):
+    return {
+        'email': member.email,
+        'name': member.username
+    }
 
 @groups.route('/groups/<group_name>', methods=['POST'])
 @login_required
@@ -50,14 +58,31 @@ def remove(group_name):
 @groups.route('/groups/<group_name>/members/<member_email>', methods=['POST'])
 @login_required
 def add_member(group_name, member_email):
-    # TODO implement
-    print('Adding %s to %s' % (member_email, group_name))
+    group = Group.query.filter_by(user_id = g.auth['sub'], name = group_name).first()
+    if group == None:
+        raise DoesNotExistError(group_name)
+    user = User.query.filter_by(email = member_email).first()
+    if user == None:
+        raise DoesNotExistError(member_email)
+    try:
+        group.members.append(user)
+        db.session.commit()
+    except IntegrityError as e:
+        raise AlreadyExistsError(member_email)
     return ('', HTTPStatus.OK)
-
 
 @groups.route('/groups/<group_name>/members/<member_email>', methods=['DELETE'])
 @login_required
 def remove_member(group_name, member_email):
-    # TODO implement
-    print('Removing %s from %s' % (member_email, group_name))
+    group = Group.query.filter_by(user_id = g.auth['sub'], name = group_name).first()
+    if group == None:
+        raise DoesNotExistError(group_name)
+    user = User.query.filter_by(email = member_email).first()
+    if user == None:
+        raise DoesNotExistError(member_email)
+    try:
+        group.members.remove(user)
+        db.session.commit()
+    except ValueError as e:
+        raise DoesNotExistError(member_email)
     return ('', HTTPStatus.OK)
