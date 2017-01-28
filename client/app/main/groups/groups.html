@@ -50,20 +50,26 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
+                        <div class="alert alert-danger" role="alert" ng-if="$ctrl.addGroupError">
+                            {{$ctrl.addGroupError}}
+                        </div>
                         <form class="form-horizontal" name="addgroupform" novalidate>
-                            <div class="form-group">
+                            <div class="form-group" ng-class="{true: 'has-error'}[addgroupform.$submitted && addgroupform.name.$invalid]">
                                 <label for="name" class="col-sm-2 control-label">Name</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="name" ng-model="$ctrl.group.name">
+                                    <input type="text" class="form-control" name="name" ng-model="$ctrl.group.name" required />
                                 </div>
                             </div>
                         </form>
+                        <div class="loading" ng-show="$ctrl.submitting">
+                            <img src="images/loading.gif" />
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Add new group</button>
+                <button type="button" class="btn btn-primary" ng-click="$ctrl.addGroup()">Add new group</button>
             </div>
         </div>
     </div>
@@ -86,22 +92,25 @@
                             {{$ctrl.addShareError}}
                         </div>
                         <form class="form-horizontal" name="addshareform" novalidate ng-show="!$ctrl.loadingShares">
-                            <div class="form-group">
+                            <div class="form-group" ng-class="{true: 'has-error'}[addshareform.$submitted && addshareform.selectshare.$invalid]">
                                 <label for="selectshare" class="col-sm-2 control-label">Share</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" name="selectshare"
-                                        ng-model="$ctrl.share.name"
-                                        ng-options="share.name for share in $ctrl.shares | filter:$ctrl.filterShares">
+                                    <select class="form-control" name="selectshare" ng-model="$ctrl.share.name"
+                                        ng-options="share.name for share in $ctrl.shares | filter:$ctrl.filterShares"
+                                        required>
                                     </select>
                                 </div>
                             </div>
                         </form>
+                        <div class="loading" ng-show="$ctrl.submitting">
+                            <img src="images/loading.gif" />
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Add new share</button>
+                <button type="button" class="btn btn-primary" ng-click="$ctrl.addShare()">Add new share</button>
             </div>
         </div>
     </div>
@@ -117,20 +126,26 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
+                        <div class="alert alert-danger" role="alert" ng-if="$ctrl.addMemberError">
+                            {{$ctrl.addMemberError}}
+                        </div>
                         <form class="form-horizontal" name="addmemberform" novalidate>
-                            <div class="form-group">
+                            <div class="form-group" ng-class="{true: 'has-error'}[addmemberform.$submitted && addmemberform.email.$invalid]">
                                 <label for="email" class="col-sm-2 control-label">Email</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control" name="email" ng-model="$ctrl.member.email">
+                                    <input type="email" class="form-control" name="email" ng-model="$ctrl.member.email" required>
                                 </div>
                             </div>
                         </form>
+                        <div class="loading" ng-show="$ctrl.submitting">
+                            <img src="images/loading.gif" />
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Add new member</button>
+                <button type="button" class="btn btn-primary" ng-click="$ctrl.addMember()">Add new member</button>
             </div>
         </div>
     </div>
@@ -151,6 +166,9 @@
                                 from {{ $ctrl.item.from.type }} <strong>{{ $ctrl.item.from.name }}</strong>
                             </span>?
                         </p>
+                        <div class="loading" ng-show="$ctrl.submitting">
+                            <img src="images/loading.gif" />
+                        </div>
                     </div>
                 </div>
             </div>
