@@ -34,6 +34,7 @@ class Path(db.Model, Serializer):
 
     __table_args__ = (db.UniqueConstraint('name', 'share_id', name='paths_name_share_id_uc'), )
 
-    def __init__(self, name, path):
+    def __init__(self, name, path, share_id):
         self.name = name
         self.path = path
+        self.share_id = share_id

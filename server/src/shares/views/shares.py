@@ -13,7 +13,6 @@ from exceptions import AlreadyExistsError, DoesNotExistError
 @shares.route('/shares', methods=['GET'])
 @login_required
 def list():
-    # TODO implement
     shares = Share.query.filter_by(user_id = g.auth['sub']).all()
     shares = [out_share(share) for share in shares]
     return jsonify({
