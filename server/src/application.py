@@ -18,7 +18,6 @@ from users import users
 from auth import auth
 from devices import devices
 from groups import groups
-from groups import memberships
 from shares import shares
 from debug import debug
 
@@ -28,9 +27,5 @@ app.register_blueprint(users, url_prefix=api_prefix)
 app.register_blueprint(auth, url_prefix=api_prefix)
 app.register_blueprint(devices, url_prefix=api_prefix)
 app.register_blueprint(groups, url_prefix=api_prefix)
-app.register_blueprint(memberships, url_prefix=api_prefix)
 app.register_blueprint(shares, url_prefix=api_prefix)
 app.register_blueprint(debug)
-	
-#from application import db
-#db.create_all()
