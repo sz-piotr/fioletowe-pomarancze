@@ -4,6 +4,9 @@ from flask import jsonify, request, g
 from http import HTTPStatus
 from auth.decorators import login_required
 from util.decorators import request_schema
+from exceptions import AlreadyExistsError, DoesNotExistError
+from sqlalchemy.exc import IntegrityError
+from application import db
 
 
 @groups.route('/groups', methods=['GET'])
@@ -24,16 +27,23 @@ def list():
 @groups.route('/groups/<group_name>', methods=['POST'])
 @login_required
 def add(group_name):
-    # TODO implement
-    print('Adding:', group_name)
-    return ('', HTTPStatus.OK)
+    try:
+        group = Group(
+            name=group_name,
+            user_id=g.auth['sub']
+        )
+        db.session.add(group)
+        db.session.commit()
+    except IntegrityError as e:
+        raise AlreadyExistsError(group_name)
+    return ('', HTTPStatus.NO_CONTENT)
 
 
 @groups.route('/groups/<group_name>', methods=['DELETE'])
 @login_required
 def remove(group_name):
-    # TODO implement
-    print('Removing:', group_name)
+    Group.query.filter_by(user_id=g.auth['sub'], name=group_name).delete()
+    db.session.commit()
     return ('', HTTPStatus.OK)
 
 

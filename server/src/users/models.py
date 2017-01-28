@@ -12,6 +12,7 @@ class User(db.Model, Serializer):
 
     devices = db.relationship("Device", back_populates="user")
     shares = db.relationship("Share", back_populates="user")
+    own_groups = db.relationship("Group", back_populates="user")
 
     def __init__(self, username, email, password):
         self.username = username
