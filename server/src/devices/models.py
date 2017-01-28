@@ -11,6 +11,8 @@ class Device(db.Model, Serializer):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     user = db.relationship("User", back_populates="devices")
+    shares = db.relationship("Share", back_populates="device")
+
 
     __table_args__ = (db.UniqueConstraint('name', 'user_id', name='name_user_uc'), )
 

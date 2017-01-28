@@ -50,6 +50,11 @@ class LoginRequredError(ApiException):
         ApiException.__init__(self, message='Login required', code='LOGIN_REQUIRED',
                               status_code=HTTPStatus.UNAUTHORIZED)
 
+class DoesNotExistError(ApiException):
+
+    def __init__(self, item):
+        ApiException.__init__(self, message=item + ' does not exist', code='DOES_NOT_EXIST')
+
 
 def register(app):
     @app.errorhandler(ApiException)

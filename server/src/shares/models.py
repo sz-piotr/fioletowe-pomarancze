@@ -8,8 +8,18 @@ class Share(db.Model, Serializer):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
 
-    def __init__(self, name):
+    device_id = db.Column(db.Integer, db.ForeignKey('device.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    device = db.relationship("Device", back_populates="shares")
+    user = db.relationship("User", back_populates="shares")
+
+    __table_args__ = (db.UniqueConstraint('name', 'user_id', name='shares_name_user_id_uc'), )
+
+    def __init__(self, name, user_id, device_id):
         self.name = name
+        self.user_id = user_id
+        self.device_id = device_id
 
 class Path(db.Model, Serializer):
     __private__ = ('id')
