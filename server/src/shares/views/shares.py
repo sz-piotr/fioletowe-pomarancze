@@ -48,6 +48,6 @@ def add(share_name):
 @shares.route('/shares/<share_name>', methods=['DELETE'])
 @login_required
 def remove(share_name):
-    # TODO implement
-    print('Removing:', share_name)
+    Share.query.filter_by(user_id=g.auth['sub'], name=share_name).delete()
+    db.session.commit()
     return ('', HTTPStatus.OK)
