@@ -13,6 +13,7 @@ class Share(db.Model, Serializer):
 
     device = db.relationship("Device", back_populates="shares")
     user = db.relationship("User", back_populates="shares")
+    paths = db.relationship("Path", back_populates="share")
 
     __table_args__ = (db.UniqueConstraint('name', 'user_id', name='shares_name_user_id_uc'), )
 
@@ -25,6 +26,14 @@ class Path(db.Model, Serializer):
     __private__ = ('id')
 
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    path = db.Column(db.String(350), nullable=False)
 
-    def __init__(self):
-        pass
+    share_id = db.Column(db.Integer, db.ForeignKey('share.id'))
+    share = db.relationship("Share", back_populates="paths")
+
+    __table_args__ = (db.UniqueConstraint('name', 'share_id', name='paths_name_share_id_uc'), )
+
+    def __init__(self, name, path):
+        self.name = name
+        self.path = path

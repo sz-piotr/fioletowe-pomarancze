@@ -14,16 +14,24 @@ from exceptions import AlreadyExistsError, DoesNotExistError
 @login_required
 def list():
     # TODO implement
+    shares = Share.query.filter_by(user_id = g.auth['sub']).all()
+    shares = [out_share(share) for share in shares]
     return jsonify({
-        'shares': [{
-            'name': 'name',
-            'device': 'device',
-            'paths': [{
-                'name': 'name',
-                'path:': 'path'
-            }]
-        }]
+        'shares': shares
     })
+
+def out_share(share):
+    return {
+        'name': share.name,
+        'device': share.device.name,
+        'paths': [out_path(path) for path in share.paths]
+    }
+
+def out_path(path):
+    return {
+        'name': path.name,
+        'path': path.path
+    }
 
 @shares.route('/shares/<share_name>', methods=['POST'])
 @login_required
