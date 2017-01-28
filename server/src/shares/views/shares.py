@@ -1,4 +1,5 @@
 from shares import shares, schemas
+from shares.models import Share, Path
 from flask import jsonify, request, g
 from http import HTTPStatus
 from auth.decorators import login_required
