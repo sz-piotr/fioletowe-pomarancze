@@ -105,4 +105,9 @@ case "$NW_OS" in
         ;;
 esac
 
-npm install
+which npm
+if [ "x$?" == "x0" ] ; then
+    npm install
+else
+    echo "please install npm and run \"npm install\" in this directory"
+fi
