@@ -17,6 +17,8 @@ class User(db.Model, Serializer):
 
     groups = association_proxy("membership", "group")
 
+    devices = db.relationship("Device", back_populates="user")
+
     def __init__(self, username, email, password):
         self.username = username
         self.email = email
