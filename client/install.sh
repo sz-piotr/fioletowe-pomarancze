@@ -92,11 +92,11 @@ rm -r .temp
 NW_FOLDER="nwjs-sdk-$NW_VERSION-$NW_OS-$NW_ARCH"
 case "$NW_OS" in
     linux )
-        printf "./dist/%s/nw ." "$NW_FOLDER" > run.sh
+        printf "#!/bin/bash\n./dist/%s/nw . \$@" "$NW_FOLDER" > run.sh
         chmod +x run.sh
         ;;
     osx )
-        printf "./dist/%s/nwjs.app/Contents/MacOS/nwjs ." "$NW_FOLDER" > run.sh
+        printf "#!/bin/bash\n./dist/%s/nwjs.app/Contents/MacOS/nwjs . \$@" "$NW_FOLDER" > run.sh
         chmod +x run.sh
         ;;
     win )
