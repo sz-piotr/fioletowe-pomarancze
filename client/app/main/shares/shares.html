@@ -5,6 +5,9 @@
         <button class="btn btn-primary" data-toggle="modal" data-target="#add-device-modal">Add device</button>
         <button class="btn btn-primary" data-toggle="modal" data-target="#add-share-modal">Add share</button>
         <button class="btn btn-primary" data-toggle="modal" data-target="#add-path-modal">Add path</button>
+        <select class="form-control cur-dev" ng-model="$ctrl.currentDevice" ng-change="$ctrl.swapDevice()">
+            <option ng-repeat="device in $ctrl.devices" value="{{device.name}}">{{device.name}}</option>
+        </select><label class="cur-dev">Current device:</label>
     </div>
 
     <ul class="devices-list control-list primary">
@@ -27,7 +30,7 @@
                     <span class="path-name">{{ path.name }}</span>
                     <span class="path-value">{{ path.path }}</span>
                     <div class="flex-right path-remove">
-                        <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deletePath(path)"></span>
+                        <span class="click glyphicon glyphicon-remove" ng-click="$ctrl.deletePath(path,share.name)"></span>
                     </div>
                 </li>
             </ul>
@@ -65,7 +68,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Add new device</button>
+                <button type="button" class="btn btn-primary" ng-click="$ctrl.srvAdd('device')">Add new device</button>
             </div>
         </div>
     </div>
@@ -103,7 +106,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Add new share</button>
+                <button type="button" class="btn btn-primary" ng-click="$ctrl.srvAdd('share')">Add new share</button>
             </div>
         </div>
     </div>
@@ -138,7 +141,7 @@
                             <div class="form-group">
                                 <label for="path" class="col-sm-2 control-label">Path</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control monospaced" name="path" ng-model="$ctrl.path.path">
+                                    <input id="thisPathInputIdWillNeverEverAppearAgainInThisWholeApp" type="file" nwdirectory class="btn btn-default" name="path" ng-model="$ctrl.path.path">
                                 </div>
                             </div>
                         </form>
@@ -147,7 +150,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Add new path</button>
+                <button type="button" class="btn btn-primary" ng-click="$ctrl.srvAdd('path')">Add new path</button>
             </div>
         </div>
     </div>
@@ -169,7 +172,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-danger" ng-click="$ctrl.srvDelete()">Delete</button>
             </div>
         </div>
     </div>
