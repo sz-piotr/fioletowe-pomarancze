@@ -28,11 +28,15 @@ angular
             this.addGroup = () => {
                 $scope.addgroupform.$submitted = true;
                 if (!$scope.addgroupform.$invalid) {
-                    console.log('Group', this.group);
                     this.submitting = true;
-                    this.addGroupError = "Adding groups is not implemented";
-                    // TODO add group here! GroupService.addGroup
-                    this.submitting = false;
+                    GroupsService.addGroup(this.group.name)
+                        .then(
+                            response => {
+                                this.addGroupError = false;
+                                $('#add-group-modal').modal('hide');
+                                this.update();
+                            }, error => this.addGroupError = error
+                        ).finally(() => this.submitting = false);
                 }
             }
 
@@ -58,12 +62,15 @@ angular
             this.addShare = () => {
                 $scope.addshareform.$submitted = true;
                 if (!$scope.addshareform.$invalid) {
-                    console.log('Selected Group', this.selectedGroup);
-                    console.log('Share', this.share);
                     this.submitting = true;
-                    this.addShareError = "Adding shares is not implemented";
-                    // TODO add share here! GroupService.addShare
-                    this.submitting = false;
+                    GroupsService.addShare(this.share.name, this.selectedGroup.name)
+                        .then(
+                            response => {
+                                this.addShareError = false;
+                                $('#add-share-modal').modal('hide');
+                                this.update();
+                            }, error => this.addShareError = error
+                        ).finally(() => this.submitting = false);
                 }
             }
 
@@ -79,12 +86,15 @@ angular
             this.addMember = () => {
                 $scope.addmemberform.$submitted = true;
                 if (!$scope.addmemberform.$invalid) {
-                    console.log('Selected Group', this.selectedGroup);
-                    console.log('Member', this.member);
                     this.submitting = true;
-                    this.addMemberError = "Adding members is not implemented";
-                    // TODO add share here! GroupService.addMember
-                    this.submitting = false;
+                    GroupsService.addMember(this.member.email, this.selectedGroup.name)
+                        .then(
+                            response => {
+                                this.addMemberError = false;
+                                $('#add-member-modal').modal('hide');
+                                this.update();
+                            }, error => this.addMemberError = error
+                        ).finally(() => this.submitting = false);
                 }
             }
 
@@ -93,6 +103,7 @@ angular
                     type: "group",
                     name: group.name
                 }
+                this.deleteError = false;
                 $('#delete-modal').modal('show');
             }
 
@@ -105,6 +116,7 @@ angular
                         name: group.name
                     }
                 }
+                this.deleteError = false;
                 $('#delete-modal').modal('show');
             }
 
@@ -117,7 +129,31 @@ angular
                         name: group.name
                     }
                 }
+                this.deleteError = false;
                 $('#delete-modal').modal('show');
+            }
+
+            this.deleteItem = () => {
+                this.submitting = true;
+                var item = this.item;
+                switch (item.type) {
+                case "group":
+                    var promise = GroupsService.removeGroup(item.name);
+                    break;
+                case "share":
+                    var promise = GroupsService.removeShare(item.name, item.from.name);
+                    break;
+                case "member":
+                    var promise = GroupsService.removeMember(item.name, item.from.name);
+                    break;
+                }
+                promise.then(
+                    response => {
+                        this.deleteError = false;
+                        $('#delete-modal').modal('hide');
+                        this.update();
+                    }, error => this.deleteError = error
+                ).finally(() => this.submitting = false);
             }
 
             this.filterShares = share => {
