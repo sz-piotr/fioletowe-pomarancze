@@ -28,20 +28,12 @@ angular
                             var devices = response.data.devices;
                             devices.forEach(x => {
                                 x.shares = [];
-                                x.name=decodeURIComponent(x.name);
-                                x.address=decodeURIComponent(x.address);
                             });
                             $http.get('/api/shares')
                                 .then(response => {
                                     console.log(response);
                                     var shares = response.data.shares;
                                     shares.forEach(share => {
-                                        share.name=decodeURIComponent(share.name);
-                                        share.device=decodeURIComponent(share.device);
-                                        share.paths.forEach(p => {
-                                            p.name=decodeURIComponent(p.name);
-                                            p.path=decodeURIComponent(p.path);
-                                        });
                                         findByName(devices, share.device).shares.push(share)
                                     });
                                     resolve(devices);
@@ -95,7 +87,6 @@ angular
 
             addDevice(name,addr) {
                 name = encodeURIComponent(name);
-                addr = encodeURIComponent(addr);
                 return $q(function (resolve, reject) {
                     $http.post(`/api/devices/${name}`,{
                         address:addr
@@ -110,7 +101,6 @@ angular
             },
             addShare(name,dev) {
                 name = encodeURIComponent(name);
-                dev = encodeURIComponent(dev);
                 return $q(function (resolve, reject) {
                     $http.post(`/api/shares/${name}`,{
                         device:dev
@@ -126,7 +116,6 @@ angular
             addPath(path,share,syspath) {
                 path = encodeURIComponent(path);
                 share = encodeURIComponent(share);
-                syspath = encodeURIComponent(syspath);
                 return $q(function (resolve,reject) {
                     $http.post(`/api/shares/${share}/paths/${path}`,{
                         path:syspath
