@@ -123,7 +123,7 @@ angular
             this.openRemoveMemberModal = (member, group) => {
                 this.item = {
                     type: "member",
-                    name: member.name,
+                    name: member.email,
                     from: {
                         type: "group",
                         name: group.name

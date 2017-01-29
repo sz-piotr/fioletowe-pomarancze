@@ -5,37 +5,55 @@ angular
     .factory('GroupsService', function GroupsService($q, $http) {
         return {
             query() {
-                return $http.get('main/groups/fake-data.json');
+                return $http.get('/api/groups');
             },
             addGroup(group) {
-                return $q(function(resolve, reject) {
-                    reject("NOT IMPLEMENTED");
-                });
+                group = encodeURIComponent(group);
+                return $http.post('/api/groups/' + group)
+                    .then(
+                        result => result,
+                        error => $q.reject(error.data.msg)
+                    );
             },
             removeGroup(group) {
-                return $q(function(resolve, reject) {
-                    reject("NOT IMPLEMENTED");
-                });
+                group = encodeURIComponent(group);
+                return $http.delete('/api/groups/' + group)
+                    .then(
+                        result => result,
+                        error => $q.reject(error.data.msg)
+                    );
             },
             addShare(share, group) {
+                share = encodeURIComponent(share);
+                group = encodeURIComponent(group);
                 return $q(function(resolve, reject) {
                     reject("NOT IMPLEMENTED");
                 });
             },
             removeShare(share, group) {
+                share = encodeURIComponent(share);
+                group = encodeURIComponent(group);
                 return $q(function(resolve, reject) {
                     reject("NOT IMPLEMENTED");
                 });
             },
             addMember(member, group) {
-                return $q(function(resolve, reject) {
-                    reject("NOT IMPLEMENTED");
-                });
+                member = encodeURIComponent(member);
+                group = encodeURIComponent(group);
+                return $http.post('/api/groups/' + group + '/members/' + member)
+                    .then(
+                        result => result,
+                        error => $q.reject(error.data.msg)
+                    );
             },
             removeMember(member, group) {
-                return $q(function(resolve, reject) {
-                    reject("NOT IMPLEMENTED");
-                });
+                member = encodeURIComponent(member);
+                group = encodeURIComponent(group);
+                return $http.delete('/api/groups/' + group + '/members/' + member)
+                    .then(
+                        result => result,
+                        error => $q.reject(error.data.msg)
+                    );
             }
         }
     });
