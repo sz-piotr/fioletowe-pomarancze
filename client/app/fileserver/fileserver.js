@@ -19,13 +19,40 @@ var FileServer = (function () {
         });
 
     function verifyAccessToken(token, url, callback) {
-        var jwt = localStorage.jwt;
-        // TODO real request to server
+        var jwt = localStorage.jwt,
+            url = url.parse(global.cfg.server),
+            postOptions = {
+                host:url.host.replace(/:[0-9]*$/,''),
+                port:url.port,
+                path:url.pathname,
+                method:'POST',
+                headers: {
+                    'Authorization':`Bearer ${jwt}`,
+                    'Content-Type':'application/json'
+                }
+            };
         return new Promise(function (resolve, reject) {
-            resolve({
-                allowed: true,
-                realpath: process.platform === 'win32' ? path.join('C:', url) : url
+            if (!jwt) reject({code:500, message:"Not logged in. Local server inactive"});
+            var req = http.request(postOptions, function(res){
+                var res='';
+                res.on('data', (d) => {res+=d});
+                res.on('end',() => {
+                    var j;
+                    try { j = JSON.parse(res); } 
+                    catch (e) { reject(e); }
+                    resolve({
+                        allowed: j.allowed,
+                        //realpath: process.platform === 'win32' ? path.join('C:', url) : url
+                        realpath: j.realpath
+                    });
+                });
+                res.on('error', (err) => reject(err));
             });
+            req.write(JSON.stringify({
+                issuer:{token:token},
+                request:{share:url.split('/')[0],path:url.split('/')[1]}
+            }));
+            req.end();
         });
     }
 
@@ -117,6 +144,8 @@ var FileServer = (function () {
         run() {
             this.server.listen(args.port, args.addr);
             console.log('Server started on addr: ', args.addr, ' on port: ', args.port);
+            if (!localStorage.jwt)
+                console.warn("Server inactive. Waiting for login");
         }
     }
 })();

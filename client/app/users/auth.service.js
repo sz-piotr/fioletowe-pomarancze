@@ -34,6 +34,12 @@ angular
                     password: password
                 });
                 return $http.post('/api/users', data);
+            },
+            verify() {
+                return $q(function (resolve, reject) {
+                    $http.get('/api/devices')
+                    .then(res => resolve(true), err => reject(false));
+                });
             }
         }
     });

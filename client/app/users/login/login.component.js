@@ -25,5 +25,11 @@ angular
                 $scope.loginform.$setPristine();
                 $scope.loginform.$setUntouched();
             }
+
+            if (localStorage.jwt)
+                AuthService.verify()
+                .then(res => {
+                    $location.path('main');
+                }, err => {});
         }
     });
