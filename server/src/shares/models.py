@@ -8,8 +8,8 @@ class Share(db.Model, Serializer):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
 
-    device_id = db.Column(db.Integer, db.ForeignKey('device.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    device_id = db.Column(db.Integer, db.ForeignKey('device.id', ondelete="CASCADE"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     device = db.relationship("Device", back_populates="shares")
     user = db.relationship("User", back_populates="shares")
@@ -29,7 +29,7 @@ class Path(db.Model, Serializer):
     name = db.Column(db.String(80), nullable=False)
     path = db.Column(db.String(350), nullable=False)
 
-    share_id = db.Column(db.Integer, db.ForeignKey('share.id'))
+    share_id = db.Column(db.Integer, db.ForeignKey('share.id', ondelete="CASCADE"), nullable=False)
     share = db.relationship("Share", back_populates="paths")
 
     __table_args__ = (db.UniqueConstraint('name', 'share_id', name='paths_name_share_id_uc'), )

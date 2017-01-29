@@ -3,8 +3,8 @@ from serializer import Serializer
 from users import passwords
 
 user_group_association = db.Table('user_group_association', db.Model.metadata,
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('group_id', db.Integer, db.ForeignKey('group.id')),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), nullable=False),
+    db.Column('group_id', db.Integer, db.ForeignKey('group.id', ondelete="CASCADE"), nullable=False),
     db.UniqueConstraint('user_id', 'group_id', name='user_group_association_uc')
 )
 
