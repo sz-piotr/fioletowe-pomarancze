@@ -14,7 +14,7 @@ from util.decorators import request_schema
 def list():
     devices = Device.query.filter_by(user_id=g.auth['sub']).all()
     return jsonify({
-        'devices': Device.serialize_list(devices)
+        'devices': Device.serialize_list(devices,('user','shares'))
     })
 
 
