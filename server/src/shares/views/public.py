@@ -15,7 +15,7 @@ def list_shares():
     return jsonify({
         'shares':
             results
-    })	
+    })
 
 
 @shares.route('/shares/public/<user_name>/at', methods=['GET'])

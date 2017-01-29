@@ -8,6 +8,7 @@ from application import db
 from auth.decorators import login_required
 from util.decorators import request_schema
 from exceptions import AlreadyExistsError, DoesNotExistError
+from shares.views.utils import out_share
 
 
 @shares.route('/shares', methods=['GET'])
