@@ -95,7 +95,7 @@
                             <div class="form-group" ng-class="{true: 'has-error'}[addshareform.$submitted && addshareform.selectshare.$invalid]">
                                 <label for="selectshare" class="col-sm-2 control-label">Share</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" name="selectshare" ng-model="$ctrl.share.name"
+                                    <select class="form-control" name="selectshare" ng-model="$ctrl.share"
                                         ng-options="share.name for share in $ctrl.shares | filter:$ctrl.filterShares"
                                         required>
                                     </select>

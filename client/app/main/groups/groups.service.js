@@ -24,18 +24,23 @@ angular
                     );
             },
             addShare(share, group) {
+                console.log(share, group);
                 share = encodeURIComponent(share);
                 group = encodeURIComponent(group);
-                return $q(function(resolve, reject) {
-                    reject("NOT IMPLEMENTED");
-                });
+                return $http.post('/api/groups/' + group + '/shares/' + share)
+                    .then(
+                        result => result,
+                        error => $q.reject(error.data.msg)
+                    );
             },
             removeShare(share, group) {
                 share = encodeURIComponent(share);
                 group = encodeURIComponent(group);
-                return $q(function(resolve, reject) {
-                    reject("NOT IMPLEMENTED");
-                });
+                return $http.delete('/api/groups/' + group + '/shares/' + share)
+                    .then(
+                        result => result,
+                        error => $q.reject(error.data.msg)
+                    );
             },
             addMember(member, group) {
                 member = encodeURIComponent(member);

@@ -63,6 +63,7 @@ angular
                 $scope.addshareform.$submitted = true;
                 if (!$scope.addshareform.$invalid) {
                     this.submitting = true;
+                    console.log(this.share);
                     GroupsService.addShare(this.share.name, this.selectedGroup.name)
                         .then(
                             response => {
