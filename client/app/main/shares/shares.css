@@ -33,3 +33,16 @@
     padding: 0px 5px;
     background-color: #f0f0f0;
 }
+
+.cur-dev {
+    display:block;
+    float:right;
+}
+
+select.cur-dev {
+    width: 10em;
+}
+
+label.cur-dev {
+    margin:.5em;
+}
