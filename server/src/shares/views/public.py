@@ -3,19 +3,19 @@ from flask import jsonify, request, g
 from http import HTTPStatus
 from auth.decorators import login_required
 from util.decorators import request_schema
+from shares.models import Share
+from shares.views.utils import out_aval_share, out_path
 
 
 @shares.route('/shares/public', methods=['GET'])
 @login_required
 def list_shares():
-    # TODO implement
+    shares = Share.query.all()
+    results = [out_aval_share(share) for share in shares]
     return jsonify({
-        'shares': [{
-            'owner': 'name',
-            'name': 'sharename',
-            'paths': [{'name': 'name'}]
-        }]
-    })
+        'shares':
+            results
+    })	
 
 
 @shares.route('/shares/public/<user_name>/at', methods=['GET'])
