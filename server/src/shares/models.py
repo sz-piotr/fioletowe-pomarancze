@@ -1,5 +1,6 @@
 from application import db
 from serializer import Serializer
+from groups.models import share_group_association
 
 
 class Share(db.Model, Serializer):
@@ -14,6 +15,7 @@ class Share(db.Model, Serializer):
     device = db.relationship("Device", back_populates="shares")
     user = db.relationship("User", back_populates="shares")
     paths = db.relationship("Path", back_populates="share")
+    groups = db.relationship("Group", secondary=share_group_association, back_populates="shares")
 
     __table_args__ = (db.UniqueConstraint('name', 'user_id', name='shares_name_user_id_uc'), )
 
