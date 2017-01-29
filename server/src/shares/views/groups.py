@@ -7,6 +7,7 @@ from auth.decorators import login_required
 from util.decorators import request_schema
 from sqlalchemy.exc import IntegrityError
 from application import db
+from exceptions import AlreadyExistsError, DoesNotExistError
 
 
 @shares.route('/groups/<group_name>/shares/<share_name>', methods=['POST'])
@@ -27,7 +28,7 @@ def add_to_group(group_name, share_name):
     return ('', HTTPStatus.OK)
 
 
-@shares.route('/groups<group_name>/shares/<share_name>', methods=['DELETE'])
+@shares.route('/groups/<group_name>/shares/<share_name>', methods=['DELETE'])
 @login_required
 def remove_from_group(group_name, share_name):
     group = Group.query.filter_by(user_id = g.auth['sub'], name = group_name).first()
@@ -36,9 +37,9 @@ def remove_from_group(group_name, share_name):
     share = Share.query.filter_by(user_id = g.auth['sub'], name = share_name).first()
     if share == None:
         raise DoesNotExistError(share_name)
-		
+
     group.shares.remove(share)
     db.session.commit()
-	
+
     print('Removing %s from %s' % (group_name, share_name))
     return ('', HTTPStatus.OK)

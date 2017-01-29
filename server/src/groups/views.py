@@ -22,7 +22,7 @@ def list():
 def out_group(group):
     return {
         'name': group.name,
-        'shares': [],
+        'shares': [out_share(share) for share in group.shares],
         'members': [out_member(member) for member in group.members]
     }
 
@@ -30,6 +30,11 @@ def out_member(member):
     return {
         'email': member.email,
         'name': member.username
+    }
+
+def out_share(share):
+    return {
+        'name': share.name
     }
 
 @groups.route('/groups/<group_name>', methods=['POST'])
