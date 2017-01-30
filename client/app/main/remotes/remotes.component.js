@@ -6,16 +6,20 @@ angular
         templateUrl: 'main/remotes/remotes.html',
         css: 'main/remotes/remotes.css',
         controller: function RemotesController(RemotesService) {
-
             this.goto = node => {
                 this.node = node;
                 this.breadcrumbs = node.ancestors();
                 this.breadcrumbs.push(node);
-                node.children().then(response => {
-                    this.nodes = response;
-                });
+                node.children().then(
+                    response => this.nodes = response,
+                    error => this.error = error
+                );
             }
 
-            this.goto(RemotesService.get('/'));
+            RemotesService.getRoot()
+                .then(
+                    response => this.goto(response),
+                    error => this.error = error
+                );
         }
     });

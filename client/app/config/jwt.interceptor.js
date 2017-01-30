@@ -5,7 +5,7 @@ angular.module('fioletoweApp')
         return {
             request: function (config) {
                 var jwt = localStorage['jwt'];
-                if (jwt)
+                if (jwt && config.url.startsWith('/api'))
                     config.headers['Authorization'] = 'Bearer ' + jwt;
                 return config;
             }

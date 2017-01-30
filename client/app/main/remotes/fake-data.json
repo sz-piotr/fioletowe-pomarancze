@@ -2,6 +2,7 @@
   "shares": [{
     "owner": "Piotr Szlachciak",
     "name": "obrazki",
+    "address": "localhost:8111",
     "paths": [{
       "name": "ładne"
     }, {
@@ -10,6 +11,7 @@
   }, {
     "owner": "Piotr Szlachciak",
     "name": "dokumenty",
+    "address": "localhost:8111",
     "paths": [{
       "name": "studia"
     }, {
@@ -20,6 +22,7 @@
   }, {
     "owner": "John Snow",
     "name": "The Wall",
+    "address": "localhost:8111",
     "paths": [{
       "name": "Castle Black"
     }, {
@@ -28,6 +31,7 @@
   }, {
     "owner": "John Snow",
     "name": "knowledge",
+    "address": "localhost:8111",
     "paths": []
   }]
 }

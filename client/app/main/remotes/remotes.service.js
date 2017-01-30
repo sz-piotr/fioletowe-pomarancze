@@ -3,64 +3,104 @@
 angular
     .module('main.remotes')
     .factory('RemotesService', function RemotesService($q, $http) {
-        function asQuery(filepath) {
-            filepath = filepath.split('/').filter(x => x !== '');
+        var tree = {
+            children: {}
+        };
+
+        var tokens = {};
+
+        function populateTree() {
+            return $http.get('main/remotes/fake-data.json')
+                .then(response => {
+                    for (let share of response.data.shares) {
+                        tree.children[share.owner] = tree.children[share.owner] || {
+                            type: "USER",
+                            name: share.owner,
+                            children: {},
+                            parent: tree
+                        }
+                        let paths = {};
+                        let shareNode = tree.children[share.owner].children[share.name] = {};
+                        share.paths.forEach(path => paths[path.name] = {
+                            type: "DIRECTORY",
+                            name: path.name,
+                            parent: shareNode
+                        });
+                        shareNode.type = "DIRECTORY";
+                        shareNode.name = share.name;
+                        shareNode.children = paths;
+                        shareNode.parent = tree.children[share.owner];
+                        shareNode.address = share.address;
+                    }
+                }, error => $q.reject(error));
+        }
+
+        function getLocation(remote) {
+            let ancestors = remote.ancestors();
+            ancestors.push(remote);
             return {
-                user: filepath[0],
-                share: filepath[1],
-                path: filepath.slice(2).join('/')
+                owner: ancestors[1].node.name,
+                share: ancestors[2].node.name,
+                path: ancestors[3].node.name,
+                address: ancestors[2].node.address
             }
         }
 
-        function asTree(shares) {
-            let tree = {};
-            shares.forEach(share => {
-                tree[share.owner] = tree[share.owner] || {};
-                tree[share.owner][share.name] = {};
-                share.paths.forEach(path => {
-                    tree[share.owner][share.name][path.name] = null;
-                });
-            });
-            return {
-                tree: tree,
-                get(query) {
-                    if (query.user === undefined) {
-                        return Object.getOwnPropertyNames(this.tree)
-                            .map(x => '/' + x)
-                            .map(x => new RemoteObject(x, 'USER'));
-                    } else if (query.share === undefined) {
-                        let path = '/' + query.user;
-                        return Object.getOwnPropertyNames(this.tree[query.user])
-                            .map(x => path + '/' + x)
-                            .map(x => new RemoteObject(x, 'DIRECTORY'));
-                    } else {
-                        let path = '/' + query.user + '/' + query.share;
-                        return Object.getOwnPropertyNames(this.tree[query.user][query.share])
-                            .map(x => path + '/' + x)
-                            .map(x => new RemoteObject(x, 'DIRECTORY'));
-                    }
+        function getToken(remote) {
+            let location = getLocation(remote);
+            if (tokens[location.owner] !== undefined) {
+                return $q.when(tokens[location.owner]);
+            } else {
+                let user = encodeURIComponent(location.owner);
+                return $http.get(`/api/shares/public/${user}/at`)
+                    .then(
+                        response => response.data.token,
+                        error => $q.reject(error)
+                    );
+            }
+        }
+
+        function buildUrl(remote) {
+            let ancestors = remote.ancestors();
+            ancestors.push(remote);
+            let address = ancestors[2].node.address;
+            let url = address;
+            for (let ancestor of ancestors.slice(2)) {
+                url += '/' + encodeURIComponent(ancestor.node.name);
+            }
+            return url;
+        }
+
+        function populateChildren(remote, token) {
+            var url = buildUrl(remote);
+            console.log(token);
+            return $http.get(`http://${url}`, {
+                headers: {
+                    'Authorization': `AccessToken ${token}`
                 }
-            };
+            }).then(
+                response => {
+                    console.log(response);
+                },
+                error => $q.reject(error)
+            );
         }
 
         class RemoteObject {
-            constructor(filepath, type) {
-                this.path = filepath;
-                filepath = filepath.split('/');
-                this.name = filepath[filepath.length - 1];
-                this.type = type;
+            constructor(node) {
+                this.node = node;
+                if (this.node !== tree) {
+                    this.name = this.node.name;
+                    this.type = this.node.type;
+                }
             }
 
             ancestors() {
                 var ancestors = [];
-                var current = this.path.replace(/\/$/, "");
-                while (true) {
-                    var lastSlash = current.lastIndexOf('/');
-                    if (lastSlash === -1)
-                        break;
-                    var parent = current.substring(0, lastSlash);
-                    ancestors.push(new RemoteObject(parent));
-                    current = parent;
+                var current = this.node;
+                while (current.parent) {
+                    ancestors.push(new RemoteObject(current.parent));
+                    current = current.parent;
                 }
                 return ancestors.reverse();
             }
@@ -79,25 +119,37 @@ angular
 
             children() {
                 return $q((resolve, reject) => {
-                    let query = asQuery(this.path);
-                    if (query.path === '') {
-                        $http.get('main/remotes/fake-data.json')
-                            .then(response => {
-                                let tree = asTree(response.data.shares);
-                                global.tree = tree;
-                                resolve(tree.get(query));
-                            }, error => reject(error));
+                    if (this.node.type === 'FILE') {
+                        reject('This is a file!');
+                    } else if (this.node.children !== undefined) {
+                        resolve(this._children());
                     } else {
-                        // TODO ask for user, query that user
+                        let token = getToken(this).then(
+                            token => populateChildren(this, token).then(
+                                response => resolve(this._children()),
+                                error => reject(error)
+                            ),
+                            error => reject(error)
+                        );
                         resolve([]);
                     }
                 });
             }
+
+            _children() {
+                return Reflect.ownKeys(this.node.children).map(
+                    key => new RemoteObject(this.node.children[key])
+                );
+            }
         }
 
         return {
-            get(path) {
-                return new RemoteObject(path);
+            getRoot() {
+                return populateTree()
+                    .then(
+                        response => new RemoteObject(tree),
+                        error => $q.reject(error)
+                    );
             }
         }
     });
