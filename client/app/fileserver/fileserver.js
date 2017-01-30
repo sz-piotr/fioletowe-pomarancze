@@ -66,7 +66,7 @@ var FileServer = (function () {
                 .then(
                     response => {
                         if (response.allowed) {
-                            resolve(response.realpath);
+                            resolve(path.join(response.realpath, ...parsedUrl.pathname.split('/').slice(3)));
                         } else {
                             reject({
                                 code: 403,
