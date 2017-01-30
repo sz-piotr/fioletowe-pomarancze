@@ -14,7 +14,7 @@ def login():
     for user in users:
         if user.check(data['password']):
             return jsonify({
-                'token': tokens.encode(user).decode('utf-8'),
+                'token': tokens.encode_auth(user).decode('utf-8'),
                 'username': user.username
             })
     else:

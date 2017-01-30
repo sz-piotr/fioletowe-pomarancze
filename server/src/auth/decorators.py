@@ -16,7 +16,9 @@ def login_required(f):
             raise LoginRequredError()
         try:
             g.auth = tokens.decode(auth[7:])
-        except InvalidTokenError:
+            if g.auth['type'] != 'auth':
+                raise InvalidTokenError
+        except (InvalidTokenError, KeyError):
             raise LoginError('Invalid token')
         return f(*args, **kwargs)
     return decorated
