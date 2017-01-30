@@ -29,23 +29,23 @@ def list_shares():
 @shares.route('/shares/public/<user_name>/at', methods=['GET'])
 @login_required
 def get_access_token(user_name):
-    user = User.query.filter_by(username=user_name).one()
-    if user == None:
-        raise DoesNotExistError(user_name)
-    token = encode_access(user)
-    shares = user.shares
-    shares = [out_aval_share(share) for share in shares]
+    user = User.query.filter_by(id = g.auth['sub']).first()
+    if (user is None):
+        raise DoesNotExistError(g.data['user'])
+    for_user = User.query.filter_by(username=user_name).first()
+    if (for_user is None):
+        raise DoesNotExistError(g.data['user'])
+		
+    token = encode_access(user, for_user)
     return jsonify({
-        'token': token.decode('utf-8'),
-        'shares': 
-            shares
+        'token': token.decode('utf-8')
     })
 
 
-@shares.route('/shares/public/verify/at', methods=['GET'])
+@shares.route('/shares/public/verify/at', methods=['POST'])
 @login_required
 @request_schema(schemas.verify_access_token)
-def verify_access_token(user_name):
+def verify_access_token():
     user_name = 'user1'
     json_request = request.get_json()
     path = json_request['path']
