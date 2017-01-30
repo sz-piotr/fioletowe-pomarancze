@@ -51,6 +51,6 @@ def verify_access_token():
     token = encode_access(user)
 
     return jsonify({
-        'allowed': True if token is verified_token else False
+        'allowed': True if token is verified_token else False,
         'realpath': '/real/' + path
     })
