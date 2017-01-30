@@ -6,7 +6,7 @@ from util.decorators import request_schema
 from shares.models import Share
 from users.models import User
 from exceptions import DoesNotExistError
-from shares.views.utils import out_aval_share, out_path
+from shares.views.utils import out_aval_share, out_path, is_path_aval
 from auth.tokens import encode_access, decode
 
 
@@ -46,17 +46,31 @@ def get_access_token(user_name):
 @login_required
 @request_schema(schemas.verify_access_token)
 def verify_access_token():
-    user_name = 'user1'
     json_request = request.get_json()
-    path = json_request['path']
-    verified_token = json_request['token']
-
-    user = User.query.filter_by(username=user_name).one()
-    if user == None:
-        raise DoesNotExistError(user_name)
-    token = encode_access(user)
+    token = json_request['token']
+    token = decode(token)
+    success = {
+        'allowed': True,
+        'realpath': '/real/' + json_request['path']
+    }
+    fail = {
+        'allowed': False,
+        'realpath': '/real/' + json_request['path']
+    }
+	
+    if(token['type'] != 'access'):
+        return jsonify(fail) 
+	
+    if (g.auth['sub'] != token['for']):
+        return jsonify(fail)
     
-    return jsonify({
-        'allowed': True if token is verified_token else False,
-        'realpath': '/real/' + path
-    })
+    user = User.query.filter_by(id=token['sub']).first()
+    if user == None:
+        raise DoesNotExistError(token['sub'])
+	
+    res_path = is_path_aval(user, json_request['share'], json_request['path'])
+	
+    if(res_path == None):
+        return jsonify(fail)
+    else:
+        return jsonify(success)
