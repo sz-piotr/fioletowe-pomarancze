@@ -2,9 +2,17 @@ import jwt
 from datetime import timedelta, datetime
 from auth import secret
 
-def encode(user):
+def encode_access(user):
     payload = {
-        'sub': user.id
+        'sub': user.id,
+        'type': 'access'
+    }
+    return jwt.encode(payload, secret, algorithm='HS256')
+	
+def encode_auth(user):
+    payload = {
+        'sub': user.id,
+		'type': "auth"
     }
     return jwt.encode(payload, secret, algorithm='HS256')
 
