@@ -73,14 +73,27 @@ angular
 
         function populateChildren(remote, token) {
             var url = buildUrl(remote);
-            console.log(token);
             return $http.get(`http://${url}`, {
                 headers: {
                     'Authorization': `AccessToken ${token}`
                 }
             }).then(
                 response => {
-                    console.log(response);
+                    remote.node.children = {};
+                    for(folder of response.data.folder) {
+                        remote.node.children[folder] = {
+                            parent: remote.node,
+                            type: "DIRECTORY",
+                            name: folder,
+                        }
+                    }
+                    for(file of respones.data.files) {
+                        remote.node.children[file] = {
+                            parent: remote.node,
+                            type: "FILE",
+                            name: file,
+                        }
+                    }
                 },
                 error => $q.reject(error)
             );
@@ -136,6 +149,7 @@ angular
             }
 
             _children() {
+                console.log(this.node);
                 return Reflect.ownKeys(this.node.children).map(
                     key => new RemoteObject(this.node.children[key])
                 );
