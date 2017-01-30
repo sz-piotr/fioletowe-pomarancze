@@ -6,6 +6,7 @@ angular
         var tree = {
             children: {}
         };
+        global.tree = tree;
 
         var tokens = {};
 
@@ -79,21 +80,23 @@ angular
                 }
             }).then(
                 response => {
+                    console.log(response.data);
                     remote.node.children = {};
-                    for(folder of response.data.folder) {
+                    for(let folder of response.data.folders) {
                         remote.node.children[folder] = {
                             parent: remote.node,
                             type: "DIRECTORY",
                             name: folder,
                         }
                     }
-                    for(file of respones.data.files) {
+                    for(let file of response.data.files) {
                         remote.node.children[file] = {
                             parent: remote.node,
                             type: "FILE",
                             name: file,
                         }
                     }
+                    return response;
                 },
                 error => $q.reject(error)
             );
@@ -150,9 +153,11 @@ angular
 
             _children() {
                 console.log(this.node);
-                return Reflect.ownKeys(this.node.children).map(
+                let children = Reflect.ownKeys(this.node.children).map(
                     key => new RemoteObject(this.node.children[key])
                 );
+                console.log("return", children);
+                return children;
             }
         }
 

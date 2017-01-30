@@ -12,6 +12,7 @@ angular
                 this.breadcrumbs.push(node);
                 node.children().then(
                     response => {
+                        console.log(response);
                         delete this.error;
                         this.nodes = response;
                     },
