@@ -18,41 +18,33 @@ var FileServer = (function () {
             }
         });
 
-    function verifyAccessToken(token, url, callback) {
-        var jwt = localStorage.jwt,
-            url = url.parse(global.cfg.server),
-            postOptions = {
-                host:url.host.replace(/:[0-9]*$/,''),
-                port:url.port,
-                path:url.pathname,
-                method:'POST',
-                headers: {
-                    'Authorization':`Bearer ${jwt}`,
-                    'Content-Type':'application/json'
-                }
-            };
+    function verifyAccessToken(token, path, callback) {
         return new Promise(function (resolve, reject) {
-            if (!jwt) reject({code:500, message:"Not logged in. Local server inactive"});
-            var req = http.request(postOptions, function(res){
-                var res='';
-                res.on('data', (d) => {res+=d});
-                res.on('end',() => {
-                    var j;
-                    try { j = JSON.parse(res); } 
-                    catch (e) { reject(e); }
-                    resolve({
-                        allowed: j.allowed,
-                        //realpath: process.platform === 'win32' ? path.join('C:', url) : url
-                        realpath: j.realpath
-                    });
-                });
-                res.on('error', (err) => reject(err));
+            if (!localStorage.jwt) reject({
+                code: 500,
+                message: "Not logged in. Local server inactive"
             });
-            req.write(JSON.stringify({
-                issuer:{token:token},
-                request:{share:url.split('/')[0],path:url.split('/')[1]}
-            }));
-            req.end();
+            $.ajax({
+                url: `${global.cfg.server}/api/shares/public/verify/at`,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.jwt}`
+                },
+                method: 'POST',
+                data: JSON.stringify({
+                    issuer: {
+                        token: token
+                    },
+                    request: {
+                        share: path.split('/')[0],
+                        path: path.split('/')[1]
+                    }
+                })
+            }).done(function (data) {
+                resolve(data);
+            }).fail(function (error) {
+                console.log(error);
+                reject(error);
+            });
         });
     }
 
@@ -81,10 +73,13 @@ var FileServer = (function () {
                             });
                         }
                     },
-                    error => reject({
-                        code: 403,
-                        message: 'forbidden'
-                    })
+                    error => {
+                        reject({
+                            code: 403,
+                            message: 'forbidden'
+                        })
+                        console.error(error);
+                    }
                 );
         });
     }

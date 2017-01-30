@@ -31,10 +31,10 @@ def get_access_token(user_name):
     })
 
 
-@shares.route('/shares/public/verify/at', methods=['GET'])
+@shares.route('/shares/public/verify/at', methods=['POST'])
 @login_required
 @request_schema(schemas.verify_access_token)
-def verify_access_token(user_name):
+def verify_access_token():
     # TODO implement
     return jsonify({
         'allowed': True,
