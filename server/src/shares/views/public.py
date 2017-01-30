@@ -67,7 +67,7 @@ def verify_access_token():
         for share in owner.shares:
             if share.name == g.data['request']['share']:
                 for group in share.groups:
-                    if requester in group.users:
+                    if requester in group.members:
                         for path in share.paths:
                             if path.name == g.data['request']['path']:
                                 return jsonify({
