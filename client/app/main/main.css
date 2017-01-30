@@ -86,3 +86,11 @@
 .flex-right {
     margin-left: auto;
 }
+
+div.loading {
+    text-align: center;
+}
+
+div.loading>img {
+    height: 40px;
+}

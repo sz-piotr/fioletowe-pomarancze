@@ -33,11 +33,3 @@
 .items-list>li.add-button:hover {
     background-color: #286090;
 }
-
-div.loading {
-    text-align: center;
-}
-
-div.loading>img {
-    height: 40px;
-}

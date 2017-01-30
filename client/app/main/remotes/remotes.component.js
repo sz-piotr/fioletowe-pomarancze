@@ -7,6 +7,7 @@ angular
         css: 'main/remotes/remotes.css',
         controller: function RemotesController(RemotesService) {
             this.goto = node => {
+                this.loading = true;
                 this.node = node;
                 this.breadcrumbs = node.ancestors();
                 this.breadcrumbs.push(node);
@@ -20,7 +21,7 @@ angular
                         this.nodes = [];
                         this.error = error;
                     }
-                );
+                ).finally(() => this.loading = false);
             }
 
             RemotesService.getRoot()
