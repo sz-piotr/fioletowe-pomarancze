@@ -24,6 +24,7 @@ var FileServer = (function () {
                 code: 500,
                 message: "Not logged in. Local server inactive"
             });
+            console.log("PATH", path);
             $.ajax({
                 url: `${global.cfg.server}/api/shares/public/verify/at`,
                 headers: {
@@ -35,8 +36,8 @@ var FileServer = (function () {
                         token: token
                     },
                     request: {
-                        share: path.split('/')[0],
-                        path: path.split('/')[1]
+                        share: path.split('/')[1],
+                        path: path.split('/')[2]
                     }
                 })
             }).done(function (data) {
@@ -52,7 +53,7 @@ var FileServer = (function () {
         return new Promise(function (resolve, reject) {
             var parsedUrl = url.parse(req.url, true);
             if (/^AccessToken .+$/.test(req.headers['authorization'])) {
-                var accessToken = req.headers['authorization'].substring(11);
+                var accessToken = req.headers['authorization'].substring(12);
             } else if (parsedUrl.query['at'] !== undefined) {
                 var accessToken = parsedUrl.query['at'];
             } else {

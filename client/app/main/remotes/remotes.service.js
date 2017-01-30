@@ -10,7 +10,7 @@ angular
         var tokens = {};
 
         function populateTree() {
-            return $http.get('main/remotes/fake-data.json')
+            return $http.get('/api/shares/public')
                 .then(response => {
                     for (let share of response.data.shares) {
                         tree.children[share.owner] = tree.children[share.owner] || {

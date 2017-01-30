@@ -5,21 +5,22 @@ def out_share(share):
         'paths': [out_path(path) for path in share.paths]
     }
 
-	
+
 def out_path(path):
     return {
         'name': path.name,
         'path': path.path
     }
-	
-	
+
+
 def out_aval_share(share):
     return {
         'owner': share.user.username,
         'name': share.name,
+        'address': share.device.address,
         'paths': [out_path(path) for path in share.paths]
     }
-	
+
 def is_path_aval(user, share_comp, path_comp):
     res_path = None
     for group in user.in_groups:

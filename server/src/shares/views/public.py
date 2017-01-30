@@ -10,32 +10,37 @@ from shares.views.utils import out_aval_share, out_path, is_path_aval
 from auth.tokens import encode_access, decode
 
 
+class AccessError(Exception):
+    pass
+
+
 @shares.route('/shares/public', methods=['GET'])
 @login_required
 def list_shares():
-    user = User.query.filter_by(id = g.auth['sub']).first()
+    user = User.query.filter_by(id=g.auth['sub']).first()
     if (user is None):
         raise DoesNotExistError(g.data['user'])
-	
-    results = []
+
+    shares = []
     for group in user.in_groups:
-        results.extend([out_aval_share(share) for share in group.shares])
+        for share in group.shares:
+            if not share in shares:
+                shares.append(share)
     return jsonify({
-        'shares':
-            results
-    })	
+        'shares': [out_aval_share(share) for share in shares]
+    })
 
 
 @shares.route('/shares/public/<user_name>/at', methods=['GET'])
 @login_required
 def get_access_token(user_name):
-    user = User.query.filter_by(id = g.auth['sub']).first()
+    user = User.query.filter_by(id=g.auth['sub']).first()
     if (user is None):
         raise DoesNotExistError(g.data['user'])
     for_user = User.query.filter_by(username=user_name).first()
     if (for_user is None):
         raise DoesNotExistError(g.data['user'])
-		
+
     token = encode_access(user, for_user)
     return jsonify({
         'token': token.decode('utf-8')
@@ -46,31 +51,38 @@ def get_access_token(user_name):
 @login_required
 @request_schema(schemas.verify_access_token)
 def verify_access_token():
-    json_request = request.get_json()
-    token = json_request['token']
+    print('HELLO')
+    token = g.data['issuer']['token']
+    print(token)
     token = decode(token)
-    success = {
-        'allowed': True,
-        'realpath': '/real/' + json_request['path']
-    }
-    fail = {
-        'allowed': False,
-        'realpath': '/real/' + json_request['path']
-    }
-	
+    print(token)
+    try:
+        verify_access_token(token, g.auth['sub'])
+
+        owner = User.query.filter_by(id=g.auth['sub']).first()
+        requester = User.query.filter_by(id=token['sub']).first()
+        if requester == None:
+            raise AccessError
+
+        for share in owner.shares:
+            if share.name == g.data['request']['share']:
+                for group in share.groups:
+                    if requester in group.users:
+                        for path in share.paths:
+                            if path.name == g.data['request']['path']:
+                                return jsonify({
+                                    'allowed': True,
+                                    'realpath': path.path
+                                })
+                        raise AccessError
+                raise AccessError
+        raise AccessError
+    except AccessError:
+        return jsonify({'allowed': False})
+
+
+def verify_access_token(token, user_id):
     if(token['type'] != 'access'):
-        return jsonify(fail) 
-	
+        raise AccessError
     if (g.auth['sub'] != token['for']):
-        return jsonify(fail)
-    
-    user = User.query.filter_by(id=token['sub']).first()
-    if user == None:
-        raise DoesNotExistError(token['sub'])
-	
-    res_path = is_path_aval(user, json_request['share'], json_request['path'])
-	
-    if(res_path == None):
-        return jsonify(fail)
-    else:
-        return jsonify(success)
+        raise AccessError
