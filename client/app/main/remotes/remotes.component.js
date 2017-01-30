@@ -11,8 +11,14 @@ angular
                 this.breadcrumbs = node.ancestors();
                 this.breadcrumbs.push(node);
                 node.children().then(
-                    response => this.nodes = response,
-                    error => this.error = error
+                    response => {
+                        delete this.error;
+                        this.nodes = response;
+                    },
+                    error => {
+                        this.nodes = [];
+                        this.error = error;
+                    }
                 );
             }
 

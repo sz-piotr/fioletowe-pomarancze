@@ -127,11 +127,10 @@ angular
                         let token = getToken(this).then(
                             token => populateChildren(this, token).then(
                                 response => resolve(this._children()),
-                                error => reject(error)
+                                error => reject(error.statusText)
                             ),
                             error => reject(error)
                         );
-                        resolve([]);
                     }
                 });
             }
