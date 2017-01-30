@@ -5,6 +5,9 @@ angular
     .factory('RemotesService', function RemotesService($q, $http) {
         var tree;
         var tokens = {};
+        var nfs = require('fs');
+        var nhttp = require('http');
+        var nurl = require('url');
 
         function populateTree() {
             tree = {
@@ -101,6 +104,55 @@ angular
             );
         }
 
+        function fetchFile(remote, token, stream) {
+            var url = buildUrl(remote),
+                purl = nurl.parse(`http://${url}`),
+                getOptions = {
+                    hostname:purl.hostname,
+                    port:purl.port,
+                    path:purl.path,
+                    headers:{
+                        'Authorization': `AccessToken ${token}`
+                    }
+                };
+            return $q(function(resolve, reject){
+                var getReq = nhttp.get(getOptions,(res) => {
+                    if (res.statusCode != 200)
+                        return reject(res.statusText);
+
+                    var _bytes=0,
+                        _ended=false,
+                        _size=res.headers['content-length'],
+                        progress = {
+                            get bytesReceived(){return _bytes},
+                            get ended(){return _ended},
+                            get bytesTotal(){return _size},
+                            onend:null,
+                            onprogress:null
+                        };
+                    res.on('data',d => {
+                        _bytes += d.length;
+                        if (typeof progress.onprogress === 'function')
+                            progress.onprogress(_bytes);
+                    });
+                    res.on('end',() => {
+                        _ended=true;
+                        if (typeof progress.onend === 'function')
+                            progress.onend();
+                    });
+                    res.on('error',err => {
+                        _ended=true;
+                        if (typeof progress.onerror === 'function')
+                            progress.onerror(err);
+                    });
+                    res.pipe(stream);
+                    return resolve(progress);
+                });
+                getReq.on('error',(err) => reject(err));
+                console.log(getOptions);
+            });
+        }
+
         class RemoteObject {
             constructor(node) {
                 this.node = node;
@@ -130,6 +182,30 @@ angular
 
             isUser() {
                 return this.type === 'USER';
+            }
+
+            download(destination) {
+                return $q((resolve, reject) => {
+                    console.log('Download to:',destination);
+                    if (this.node.type != 'FILE') {
+                        reject('This is not a file!');
+                    } else {
+                        try { //pilot write
+                            nfs.writeFileSync(destination,'0');
+                            nfs.unlinkSync(destination);
+                        } catch (e) {
+                            reject('Could not write to destination');
+                            return;
+                        }
+                        let token = getToken(this).then(
+                            token => fetchFile(this, token, nfs.createWriteStream(destination)).then(
+                                response => resolve(response),
+                                error => reject(error.statusText)
+                            ),
+                            error => reject(error)
+                        );
+                    }
+                });
             }
 
             children() {

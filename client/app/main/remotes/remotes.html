@@ -1,6 +1,7 @@
 <div class="container-fluid page-wrapper">
     <div class="buttons-wrapper">
         <input type="text" class="form-control" placeholder="filter" ng-model="filter">
+        <progress id="ddProgress" style="opacity:0.25" value="0" max="100"></progress> 
     </div>
     <ol class="remote-panel control-panel primary">
         <li ng-repeat="node in $ctrl.breadcrumbs">
