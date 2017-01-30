@@ -3,14 +3,13 @@
 angular
     .module('main.remotes')
     .factory('RemotesService', function RemotesService($q, $http) {
-        var tree = {
-            children: {}
-        };
-        global.tree = tree;
-
+        var tree;
         var tokens = {};
 
         function populateTree() {
+            tree = {
+                children: {}
+            };
             return $http.get('/api/shares/public')
                 .then(response => {
                     for (let share of response.data.shares) {
