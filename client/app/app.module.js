@@ -5,6 +5,5 @@ angular.module('fioletoweApp', [
     'angularCSS',
     'core',
     'users',
-    'main',
-    'options'
+    'main'
 ]);
