@@ -4,7 +4,7 @@ angular.module('fioletoweApp')
     .config(function ($urlRouterProvider, $stateProvider) {
         $urlRouterProvider.when('', '/login');
         $urlRouterProvider.when('/', '/login');
-        $urlRouterProvider.when('/main', '/main/groups');
+        $urlRouterProvider.when('/main', '/main/shares');
         $stateProvider
             .state('login', {
                 url: '/login',

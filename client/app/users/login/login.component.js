@@ -11,6 +11,7 @@ angular
                 if (!$scope.loginform.$invalid) {
                     AuthService.login(this.user, this.pass)
                         .then(response => {
+                            AuthService.autorunServer();
                             $location.path('main');
                         }, error => {
                             self.error = true;
@@ -27,8 +28,9 @@ angular
             }
 
             if (localStorage.jwt)
-                AuthService.verify()
+                AuthService.verify(true)
                 .then(res => {
+                    AuthService.autorunServer();
                     $location.path('main');
                 }, err => {});
         }

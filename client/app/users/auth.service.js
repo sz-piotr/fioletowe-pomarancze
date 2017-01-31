@@ -8,12 +8,17 @@ angular
                 var data = JSON.stringify({
                     username: username,
                     password: password
-                });
+                }),
+                olduser = localStorage.username;
                 return $q(function (resolve, reject) {
                     $http.post('/api/login', data)
                         .then(response => {
                             localStorage.jwt = response.data.token;
                             localStorage.username = response.data.username;
+                            if (localStorage.username !== olduser){
+                                localStorage.removeItem('device');
+                                localStorage.removeItem('port');
+                            }
                             resolve(response.data);
                         }, error => {
                             reject(error);
@@ -26,6 +31,9 @@ angular
             logout() {
                 localStorage.removeItem('jwt');
                 localStorage.removeItem('username');
+                localStorage.removeItem('device');
+                localStorage.removeItem('port');
+                global.fileServer.stop();
             },
             signup(username, email, password) {
                 var data = JSON.stringify({
@@ -35,11 +43,15 @@ angular
                 });
                 return $http.post('/api/users', data);
             },
-            verify() {
+            verify(startServer) {
                 return $q(function (resolve, reject) {
                     $http.get('/api/devices')
                     .then(res => resolve(true), err => reject(false));
                 });
+            },
+            autorunServer() {
+                if (!global.fileServer.listening && localStorage.port)
+                    global.fileServer.run(Number(localStorage.port));
             }
         }
     });

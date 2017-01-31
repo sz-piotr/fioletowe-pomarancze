@@ -5,7 +5,7 @@
         <button class="btn btn-primary" data-toggle="modal" data-target="#add-device-modal">Add device</button>
         <button class="btn btn-primary" data-toggle="modal" data-target="#add-share-modal">Add share</button>
         <button class="btn btn-primary" data-toggle="modal" data-target="#add-path-modal">Add path</button>
-        <select class="form-control cur-dev" ng-model="$ctrl.currentDevice" ng-change="$ctrl.swapDevice()">
+        <select class="form-control cur-dev" value="" ng-class="{invalid:$ctrl.currentDevice===null}" placeholder="Device" ng-model="$ctrl.currentDevice" ng-change="$ctrl.swapDevice()">
             <option ng-repeat="device in $ctrl.devices" value="{{device.name}}">{{device.name}}</option>
         </select><label class="cur-dev">Current device:</label>
     </div>

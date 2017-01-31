@@ -5,18 +5,7 @@ var FileServer = (function () {
         http = require('http'),
         path = require('path'),
         url = require('url'),
-        args = require('minimist')(require('nw.gui').App.argv, {
-            number: ['port'],
-            string: ['addr'],
-            alias: {
-                port: ['p'],
-                addr: ['a']
-            },
-            default: {
-                port: 8111,
-                addr: '0.0.0.0'
-            }
-        });
+        args = global.cfg;
 
     function verifyAccessToken(token, path, callback) {
         return new Promise(function (resolve, reject) {
@@ -36,8 +25,8 @@ var FileServer = (function () {
                         token: token
                     },
                     request: {
-                        share: path.split('/')[1],
-                        path: path.split('/')[2]
+                        share: decodeURIComponent(path.split('/')[1]),
+                        path: decodeURIComponent(path.split('/')[2])
                     }
                 })
             }).done(function (data) {
@@ -109,6 +98,12 @@ var FileServer = (function () {
     return class FileServer {
         constructor() {
             this.server = http.createServer(this.reqHandler.bind(this));
+            this.server.on('listening',(ev)=>{
+
+            });
+            this.server.on('close',(ev)=>{
+                console.log('Server stopped');
+            });
         }
 
         reqHandler(req, res) {
@@ -141,14 +136,29 @@ var FileServer = (function () {
                 });
         }
 
-        run() {
-            this.server.listen(args.port, args.addr);
-            console.log('Server started on addr: ', args.addr, ' on port: ', args.port);
-            if (!localStorage.jwt)
-                console.warn("Server inactive. Waiting for login");
+        run(port) {
+            var s = () => {
+                port=port||args.port;
+                this.server.listen(port, args.addr);
+                console.log('Server started on addr: ', args.addr, ' on port: ', port);
+                if (!localStorage.jwt)
+                    console.warn("Server inactive. Waiting for login");
+            }
+            if (this.server.listening){
+                this.server.once('close',s);
+                this.stop();
+            } else
+                s();
+        }
+
+        stop() {
+            this.server.close();
+        }
+
+        get listening() {
+            return this.server.listening;
         }
     }
 })();
 
 global.fileServer = new FileServer();
-global.fileServer.run();

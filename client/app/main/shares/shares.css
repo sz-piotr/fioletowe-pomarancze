@@ -46,3 +46,7 @@ select.cur-dev {
 label.cur-dev {
     margin:.5em;
 }
+
+.invalid {
+    background: #faa !important;
+}

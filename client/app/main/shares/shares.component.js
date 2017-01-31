@@ -6,8 +6,22 @@ angular
         templateUrl: 'main/shares/shares.html',
         css: 'main/shares/shares.css',
         controller: function SharesController(SharesService) {
-            var cap = s => ((s).toUpperCase().slice(0,1)+(s).slice(1)),
-                fpinp = document.getElementById("thisPathInputIdWillNeverEverAppearAgainInThisWholeApp");
+            var nurl = require('url'),
+                cap = s => ((s).toUpperCase().slice(0,1)+(s).slice(1)),
+                fpinp = document.getElementById("thisPathInputIdWillNeverEverAppearAgainInThisWholeApp"),
+                setDev = (dev,addr) => {
+                    if (dev){
+                        localStorage.port=nurl.parse(`http://${addr}`).port;
+                        localStorage.device=dev;
+                        this.currentDevice=dev;
+                        global.fileServer.run(Number(localStorage.port)||null);
+                    } else {
+                        localStorage.removeItem('device');
+                        localStorage.removeItem('port');
+                        this.currentDevice=null;
+                        global.fileServer.stop();
+                    }
+                }
 
             this.update = () => SharesService.query()
                 .then(
@@ -17,10 +31,9 @@ angular
                         this.devices.forEach(device => {
                             this.shares = this.shares.concat(device.shares);
                         });
-                        if (!localStorage.device && this.devices.length)
-                            localStorage.device=this.currentDevice=this.devices[0].name;
-                        else if (localStorage.device && this.devices.filter(d => d.name==localStorage.device).length==0)
-                            localStorage.device=this.currentDevice=null;
+                        if (this.devices.filter(d => d.name==localStorage.device).length==0){
+                            setDev(null);
+                        }
                     },
                     error => this.error = error
                 );
@@ -73,11 +86,13 @@ angular
             };
 
             this.swapDevice = () => {
-                localStorage['device']=this.currentDevice;
+                var cd;
+                if (this.currentDevice && (cd=this.devices.filter(d => d.name==this.currentDevice)).length!=0)
+                    setDev(this.currentDevice,cd[0].address);
             }
 
-            if (localStorage.device)
-                this.currentDevice=localStorage.device;
+            if (localStorage.device) this.currentDevice=localStorage.device;
+            else this.currentDevice=null;
 
             this.update();
         }

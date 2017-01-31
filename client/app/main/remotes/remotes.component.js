@@ -33,7 +33,7 @@ angular
                     if (err) {
                         var merr = extractError(err);
                         console.error(err);
-                        alert('Error during download occured ${merr}');
+                        alert(`Error during download occured ${merr}`);
                     }
                 }
             }
